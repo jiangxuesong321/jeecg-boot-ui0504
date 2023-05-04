@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+  <g id="组_24440" data-name="组 24440" transform="translate(-861.75 -2047)">
+    <rect id="Rectangle-49" width="14" height="14" transform="translate(861.75 2047)" fill="none"/>
+    <g id="组_24437" data-name="组 24437">
+      <g id="upload" transform="translate(862.625 2047.875)">
+        <path id="Shape" d="M11.777,7.88a.473.473,0,0,0-.473.473v2.671a.282.282,0,0,1-.282.282h-9.8a.282.282,0,0,1-.282-.282V8.352a.472.472,0,1,0-.945,0V11.4a.85.85,0,0,0,.849.849H11.4a.85.85,0,0,0,.849-.849V8.352A.473.473,0,0,0,11.777,7.88Z" fill="#1062bd"/>
+      </g>
+      <g id="upload-2" data-name="upload" transform="translate(866.16 2047.875)">
+        <path id="Shape-2" data-name="Shape" d="M5.8,9.848a.475.475,0,0,0,.67,0L8.6,7.717a.472.472,0,1,0-.667-.669L6.612,8.373V.473a.473.473,0,1,0-.946,0v7.9L4.341,7.048a.473.473,0,0,0-.669.669Z" transform="translate(-3.535 0)" fill="#1062bd"/>
+      </g>
+    </g>
+  </g>
+</svg>
