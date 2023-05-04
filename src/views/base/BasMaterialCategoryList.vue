@@ -65,6 +65,9 @@
 					<a @click="handleEdit(record)">编辑</a>
 					<a-divider type="vertical" />
 					<a @click="handleDeleteNode(record.id)">删除</a>
+          	<a-divider type="vertical" v-if="record.hasChild=='0'"/>
+					<a  v-if="record.hasChild=='0'" @click="handleEdit2(record)">分配采购</a>
+
 <!-- 					<a-dropdown>
 						<a class="ant-dropdown-link">更多
 							<a-icon type="down" />
@@ -204,6 +207,9 @@ import {
 			}
 		},
 		methods: {
+      handleEdit2(record){
+        this.$refs.modalForm.editTwo(record);
+      },
 			loadData(arg) {
 				if (arg == 1) {
 					this.ipagination.current = 1

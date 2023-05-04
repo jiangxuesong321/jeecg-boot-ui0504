@@ -30,12 +30,22 @@
         <a-form-model-item label="名称" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="name">
           <a-input v-model="model.name" placeholder="请输入名称" :maxLength="20"></a-input>
         </a-form-model-item>
-<!--        <a-form-model-item label="全名" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="fullname">-->
-<!--          <a-input v-model="model.fullname" placeholder="请输入全名" ></a-input>-->
-<!--        </a-form-model-item>-->
-<!--        <a-form-model-item label="是否启用" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="isEnabled">-->
-<!--          <j-switch v-model="model.isEnabled" ></j-switch>-->
-<!--        </a-form-model-item>-->
+
+        <a-form-model-item label="分配采购"  v-if="is4Buyes=='1'" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="buyerIds">
+
+              <a-select v-model="model.buyerIds" placeholder="请选择分配采购" >
+                <a-select-option
+                  v-for="item in userList"
+                  :key="item.username"
+                  :value="item.username">
+                  {{ item.realname }}
+                </a-select-option>
+              </a-select>
+
+        </a-form-model-item>
+        <a-form-model-item  v-if="is4Buyes=='1'" label="是否启用" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="isEnabled4Buyer">
+          <j-switch v-model="model.isEnabled4Buyer" ></j-switch>
+        </a-form-model-item>
 
       </a-form-model>
     <div style="text-align: center;">
@@ -48,7 +58,7 @@
 
 <script>
 
-  import { httpAction } from '@/api/manage'
+  import { httpAction,getAction } from '@/api/manage'
   import { validateDuplicateValue } from '@/utils/util'
   export default {
     name: "BasMaterialCategoryModal",
@@ -59,6 +69,8 @@
         title:"操作",
         width:800,
         visible: false,
+        is4Buyes: '0',
+        userList:[],
         model:{
          },
         labelCol: {
@@ -93,8 +105,15 @@
     created () {
        //备份model原始值
        this.modelDefault = JSON.parse(JSON.stringify(this.model));
+      this.initBuyerList();
     },
     methods: {
+      initBuyerList(){
+        let url = "/sys/user/getUserByRoleCode";
+        getAction(url,{roleCode:"buyer",subject:this.model.subject}).then(res => {
+          this.userList = res.result;
+        })
+      },
       add (obj,disabled) {
         this.modelDefault.pid=''
         this.edit(Object.assign(this.modelDefault , obj));
@@ -102,7 +121,16 @@
       edit (record) {
         this.model = Object.assign({}, record);
         this.visible = true;
+        this.is4Buyes ='0';
       },
+
+      editTwo (record) {
+        this.model = Object.assign({}, record);
+        this.visible = true;
+        this.is4Buyes ='1';
+      },
+
+
       close () {
         this.$emit('close');
         this.visible = false;
