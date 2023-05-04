@@ -9,6 +9,10 @@
               <a-input v-model="model.name" placeholder="请输入供应商名称" :maxLength="50"></a-input>
             </a-form-model-item>
           </a-col>
+          <!-- // lipari -->
+          <a-col :span="2" >
+            <a-button type="primary" @click="searchQichacha" icon="search"  style="margin-left: 8px;margin-top: 4px;">企查查</a-button>
+          </a-col>
           <a-col :span="8" >
             <a-form-model-item label="供应商简称" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3"  prop="shortName">
               <a-input v-model="model.shortName" placeholder="请输入供应商简称" :maxLength="50"></a-input>
@@ -795,7 +799,21 @@ export default {
       
     },
     methods: {
+      // lipari
+      searchQichacha(){
+        var that = this;
 
+        if (that.model.name == undefined || that.model.name == ''){
+          var url = "https://www.qcc.com/";
+        }else{
+          var url = "https://www.qcc.com/web/search?key=" + that.model.name;
+        }
+
+        // window.location.href = url;
+        window.open(url, '_blank')
+
+      },
+      // lipari
       getPopupContainer(node) {
         let element = (() => {
           // nodeType 8	: Comment	: 注释

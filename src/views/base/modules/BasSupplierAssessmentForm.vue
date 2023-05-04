@@ -88,8 +88,10 @@
       this.modelDefault = JSON.parse(JSON.stringify(this.model));
     },
     methods: {
-      add () {
-        this.edit(this.modelDefault);
+      add (record) {
+        // this.edit(this.modelDefault);
+        this.model = Object.assign({}, record);
+        this.visible = true;
       },
       edit (record) {
         this.model = Object.assign({}, record);

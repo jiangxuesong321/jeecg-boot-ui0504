@@ -143,6 +143,9 @@
                 <a @click="handleResume(record)">新增履历</a>
               </a-menu-item>
 
+              <a-menu-item>
+                <a @click="handleAssessment(record)">供应商考核指标</a>
+              </a-menu-item>
               <a-menu-item v-if=" record.status == '6'">
                 <a-popconfirm title="确定停用吗?" @confirm="() => handleStop(record)">
                   <a>停用</a>
@@ -188,6 +191,8 @@
 
     <bas-supplier-modal ref="modalForm" @ok="modalFormOk"/>
     <bas-supplier-detail-modal ref="detailForm"></bas-supplier-detail-modal>
+    <bas-supplier-assessment ref="assessmentForm"></bas-supplier-assessment>
+    <bas-supplier-assessment-modal ref="assessmentModal" @ok="modalFormOk" visible="false"></bas-supplier-assessment-modal>
     <bas-supplier-account-modal ref="modalAccountForm" @ok="modalFormOk"/>
     <bas-supplier-reset-account-modal ref="modalResetAccountForm" @ok="modalFormOk"></bas-supplier-reset-account-modal>
 
@@ -306,7 +311,8 @@ import ListColumnsSetter from '@views/components/ListColumnsSetter'
 import Vue from 'vue'
 import Sortable from 'sortablejs'
 import BasSupplierResetAccountModal from '@views/base/modules/BasSupplierResetAccountModal'
-
+import BasSupplierAssessment from '@views/base/BasSupplierAssessmentList'
+import BasSupplierAssessmentModal from './modules/BasSupplierAssessmentModal'
 
 let columns = [
   {
@@ -507,7 +513,9 @@ export default {
     BasSupplierAccountModal,
     ListColumnsSetter,
     BasSupplierResetAccountModal,
-    BasSupplierDetailModal
+    BasSupplierDetailModal,
+    BasSupplierAssessment,
+    BasSupplierAssessmentModal
   },
   data () {
     this.components = {
@@ -807,6 +815,15 @@ export default {
       this.$refs.detailForm.edit(record);
       this.$refs.detailForm.title="详情";
       this.$refs.detailForm.disableSubmit = true;
+    },
+    handleAssessment:function(record){
+// this.$refs.assessmentModal.add(record);
+//       this.$refs.assessmentModal.setData(record);
+      this.$refs.assessmentModal.visible=false;
+      // this.$refs.assessmentForm.title="供应商考核指标";
+      this.$refs.assessmentForm.visible=true;
+      // this.$refs.assessmentForm.setData(record);
+      // this.$refs.assessmentForm.disableSubmit = true;
     },
     searchReset() {
       this.queryParam = {};

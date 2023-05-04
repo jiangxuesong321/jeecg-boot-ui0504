@@ -4,13 +4,20 @@
       招标列表
     </div>
     <div>
-      <a-tabs defaultActiveKey="all" v-model="tabKey" @change="handleChange">
-        <a-tab-pane tab="全部" key="all"></a-tab-pane>
-        <a-tab-pane tab="待开标" key="0"></a-tab-pane>
-        <a-tab-pane tab="已开标" key="1"></a-tab-pane>
-        <a-tab-pane tab="评标" key="2"></a-tab-pane>
-        <a-tab-pane tab="定标" key="3"></a-tab-pane>
-      </a-tabs>
+<!--      <a-tabs defaultActiveKey="all" v-model="tabKey" @change="handleChange">-->
+<!--        <a-tab-pane tab="全部" key="all"></a-tab-pane>-->
+<!--        <a-tab-pane tab="待开标" key="0"></a-tab-pane>-->
+<!--        <a-tab-pane tab="已开标" key="1"></a-tab-pane>-->
+<!--        <a-tab-pane tab="评标" key="2"></a-tab-pane>-->
+<!--        <a-tab-pane tab="定标" key="3"></a-tab-pane>-->
+<!--      </a-tabs>-->
+      <a-steps defaultActiveKey="all"  progress-dot :current="1" v-model="tabKey" @change="handleChange">
+        <a-step title="全部" key="all" />
+        <a-step title="待开标" key="0" />
+        <a-step title="已开标" key="1" />
+        <a-step title="评标" key="2" />
+        <a-step title="定标" key="3" />
+      </a-steps>
     </div>
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">

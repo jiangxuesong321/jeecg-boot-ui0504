@@ -14,9 +14,9 @@
 
 <script>
 
-  import BasSupplierAssessmentForm from './BasSupplierAssessmentForm'
+  import BasSupplierAssessmentForm  from './BasSupplierAssessmentForm'
   export default {
-    name: 'BasSupplierAssessmentModal',
+    name: 'AttachmentManagementModal',
     components: {
       BasSupplierAssessmentForm
     },
@@ -29,6 +29,9 @@
       }
     },
     methods: {
+      // setData(record){
+      //   this.modelDefault = JSON.parse(JSON.stringify(record));
+      // },
       add () {
         this.visible=true
         this.$nextTick(()=>{
