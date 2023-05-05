@@ -309,6 +309,9 @@ export default {
 		data() {
 			return {
         columns,
+        queryParam:{
+          reqCategory:'0',
+        },
 				description: 'purchase_request_main管理页面',
 				// 表头
 				// columns: [

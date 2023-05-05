@@ -97,17 +97,18 @@ import { getAction } from '@api/manage'
             }
           },
           {
-            title: '项目名称',
-            dataIndex: 'projectName',
-            width:160,
-            align: "center",
-          },
-          {
             title: '采购需求名',
             dataIndex: 'reqTitle',
             width:160,
             align: "center",
           },
+          {
+            title: '项目名称',
+            dataIndex: 'projectName',
+            width:160,
+            align: "center",
+          },
+
           {
             title: '供应商',
             dataIndex: 'suppName',

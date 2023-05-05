@@ -18,8 +18,8 @@
               </a-form-item>
             </a-col>
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
-              <a-form-item label="员工号">
-                <j-input placeholder="请输入员工号" v-model="queryParam.code"></j-input>
+              <a-form-item label="专家号">
+                <j-input placeholder="请输入专家号" v-model="queryParam.code"></j-input>
               </a-form-item>
             </a-col>
             <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -97,7 +97,7 @@ import { getAction } from '@api/manage'
             }
           },
           {
-            title:'员工号',
+            title:'专家号',
             align:"center",
             dataIndex: 'code',
             width:140,

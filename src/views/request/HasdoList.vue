@@ -429,7 +429,10 @@ export default {
         this.ipagination.current = 1;
       }
       var params = this.getQueryParams();//查询条件
-      params.reqStatus ='2';
+      if(params.reqStatus ==''){
+        params.reqStatus ='2';
+      }
+
       this.loading = true;
       getAction(this.url.list, params).then((res) => {
         if (res.success) {

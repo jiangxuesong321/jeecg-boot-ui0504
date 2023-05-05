@@ -13,10 +13,10 @@
      </a-tabs> -->
       <a-steps defaultActiveKey="all" progress-dot :current=1 v-model="tabKey" @change="handleChange">
         <a-step title="全部" />
-        <a-step title="待开标" />
-        <a-step title="已开标"  />
-        <a-step title="评标" />
-        <a-step title="定标"  />
+        <a-step title="竞价中" />
+        <a-step title="竞价结束"  />
+        <a-step title="评标结束" />
+        <a-step title="已授标"  />
       </a-steps>
     </div>
     <!-- 查询区域 -->
