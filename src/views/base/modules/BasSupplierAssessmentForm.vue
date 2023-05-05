@@ -5,12 +5,12 @@
         <a-row>
           <a-col :span="24">
             <a-form-model-item label="供应商ID" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="supplierId">
-              <a-input v-model="model.supplierId"  disabled="false" ></a-input>
+              <a-input v-model="model.supplierId"  :disabled="false" ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="供应商名" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="supplierName">
-              <a-input v-model="model.supplierName"  disabled="false"  ></a-input>
+              <a-input v-model="model.supplierName"  :disabled="false"  ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
@@ -30,7 +30,7 @@
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="指标分类" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="assessmentCategory">
-              <j-dict-select-tag type="radio" v-model="model.assessmentCategory" dictCode="" placeholder="请选择指标分类" />
+              <j-dict-select-tag type="radio" v-model="model.assessmentCategory" dictCode="supp_appraise_rule" placeholder="请选择指标分类" />
             </a-form-model-item>
            </a-col>
         </a-row>

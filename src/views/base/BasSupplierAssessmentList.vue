@@ -134,7 +134,7 @@
           {
             title:'指标分类',
             align:"center",
-            dataIndex: 'assessmentCategory_dictText'
+            dataIndex: 'assessmentCategory'
           },
           {
             title: '操作',
