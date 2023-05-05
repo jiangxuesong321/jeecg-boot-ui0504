@@ -5,12 +5,12 @@
         <a-row>
           <a-col :span="24">
             <a-form-model-item label="供应商ID" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="supplierId">
-              <a-input v-model="model.supplierId"  :disabled="false" ></a-input>
+              <a-input v-model="model.supplierId" disabled ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="供应商名" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="supplierName">
-              <a-input v-model="model.supplierName"  :disabled="false"  ></a-input>
+              <a-input v-model="model.supplierName" disabled ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
