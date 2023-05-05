@@ -23,11 +23,11 @@
               <a-input-number v-model="model.assessmentScore" placeholder="请输入指标分数" style="width: 100%" />
             </a-form-model-item>
           </a-col>
-          <a-col :span="24">
-            <a-form-model-item label="删除标识" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="delFlag">
-              <a-input v-model="model.delFlag" placeholder="请输入删除标识"  ></a-input>
-            </a-form-model-item>
-          </a-col>
+<!--          <a-col :span="24">-->
+<!--            <a-form-model-item label="删除标识" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="delFlag">-->
+<!--              <a-input v-model="model.delFlag" placeholder="请输入删除标识"  ></a-input>-->
+<!--            </a-form-model-item>-->
+<!--          </a-col>-->
           <a-col :span="24">
             <a-form-model-item label="指标分类" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="assessmentCategory">
               <j-dict-select-tag type="radio" v-model="model.assessmentCategory" dictCode="supp_appraise_rule" placeholder="请选择指标分类" />

@@ -127,14 +127,14 @@
             dataIndex: 'assessmentScore'
           },
           {
-            title:'删除标识',
+            title:'评价时间',
             align:"center",
-            dataIndex: 'delFlag'
+            dataIndex: 'createTime'
           },
           {
             title:'指标分类',
             align:"center",
-            dataIndex: 'assessmentCategory'
+            dataIndex: 'assessmentCategoryDict'
           },
           {
             title: '操作',
@@ -182,7 +182,7 @@
         fieldList.push({type:'string',value:'supplierName',text:'供应商名',dictCode:''})
         fieldList.push({type:'string',value:'assessmentContent',text:'指标内容',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'assessmentScore',text:'指标分数',dictCode:''})
-        fieldList.push({type:'string',value:'delFlag',text:'删除标识',dictCode:''})
+         fieldList.push({type:'string',value:'createTime',text:'评价时间',dictCode:''})
         fieldList.push({type:'string',value:'assessmentCategory',text:'指标分类',dictCode:''})
         this.superFieldList = fieldList
       },
