@@ -5,12 +5,12 @@
         <a-row>
           <a-col :span="24">
             <a-form-model-item label="供应商ID" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="supplierId">
-              <j-dict-select-tag type="radio" v-model="model.supplierId" dictCode="" placeholder="请选择供应商ID" />
+              <a-input v-model="model.supplierId"  disabled="false" ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="供应商名" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="supplierName">
-              <a-input v-model="model.supplierName" placeholder="请输入供应商名"  ></a-input>
+              <a-input v-model="model.supplierName"  disabled="false"  ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
@@ -32,7 +32,7 @@
             <a-form-model-item label="指标分类" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="assessmentCategory">
               <j-dict-select-tag type="radio" v-model="model.assessmentCategory" dictCode="" placeholder="请选择指标分类" />
             </a-form-model-item>
-          </a-col>
+           </a-col>
         </a-row>
       </a-form-model>
     </j-form-container>
@@ -90,7 +90,11 @@
     methods: {
       add (record) {
         // this.edit(this.modelDefault);
-        this.model = Object.assign({}, record);
+        this.model.supplierId = record.code;
+        this.model.supplierName = record.name;
+        
+        this.$forceUpdate()
+        // this.model = Object.assign({}, record);
         this.visible = true;
       },
       edit (record) {

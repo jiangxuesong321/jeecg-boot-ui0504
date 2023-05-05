@@ -4,19 +4,19 @@
       招标列表
     </div>
     <div>
-<!--      <a-tabs defaultActiveKey="all" v-model="tabKey" @change="handleChange">-->
-<!--        <a-tab-pane tab="全部" key="all"></a-tab-pane>-->
-<!--        <a-tab-pane tab="待开标" key="0"></a-tab-pane>-->
-<!--        <a-tab-pane tab="已开标" key="1"></a-tab-pane>-->
-<!--        <a-tab-pane tab="评标" key="2"></a-tab-pane>-->
-<!--        <a-tab-pane tab="定标" key="3"></a-tab-pane>-->
-<!--      </a-tabs>-->
-      <a-steps defaultActiveKey="all"  progress-dot :current="1" v-model="tabKey" @change="handleChange">
-        <a-step title="全部" key="all" />
-        <a-step title="待开标" key="0" />
-        <a-step title="已开标" key="1" />
-        <a-step title="评标" key="2" />
-        <a-step title="定标" key="3" />
+      <!-- <a-tabs defaultActiveKey="all" v-model="tabKey" @change="handleChange">
+       <a-tab-pane tab="全部" key="all"></a-tab-pane>
+     <a-tab-pane tab="待开标" key="0"></a-tab-pane>
+       <a-tab-pane tab="已开标" key="1"></a-tab-pane>
+        <a-tab-pane tab="评标" key="2"></a-tab-pane>
+     <a-tab-pane tab="定标" key="3"></a-tab-pane>
+     </a-tabs> -->
+      <a-steps defaultActiveKey="all" progress-dot :current=1 v-model="tabKey" @change="handleChange">
+        <a-step title="全部" />
+        <a-step title="待开标" />
+        <a-step title="已开标"  />
+        <a-step title="评标" />
+        <a-step title="定标"  />
       </a-steps>
     </div>
     <!-- 查询区域 -->
@@ -35,8 +35,9 @@
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="招标类型" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3">
-<!--              <a-input placeholder="请输入招标类型" v-model="queryParam.biddingNo"></a-input>-->
-              <j-dict-select-tag type="select" v-model="queryParam.biddingType" dictCode="bidding_type" placeholder="请输入招标类型" />
+              <!--              <a-input placeholder="请输入招标类型" v-model="queryParam.biddingNo"></a-input>-->
+              <j-dict-select-tag type="select" v-model="queryParam.biddingType" dictCode="bidding_type"
+                placeholder="请输入招标类型" />
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
@@ -54,70 +55,62 @@
     </div>
 
     <div>
-      <a-table
-        ref="table"
-        size="middle"
-        bordered
-        rowKey="id"
-        class="j-table-force-nowrap"
-        :scroll="{x:true}"
-        :columns="columns"
-        :dataSource="dataSource"
-        :pagination="ipagination"
-        :loading="loading"
+      <a-table ref="table" size="middle" bordered rowKey="id" class="j-table-force-nowrap" :scroll="{ x: true }"
+        :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading"
         @change="handleTableChange">
 
         <template slot="projName" slot-scope="text,record">
           <div style="width: 180px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :title="text">
-            {{text}}
+            {{ text }}
           </div>
         </template>
 
         <template slot="biddingName" slot-scope="text,record">
           <div style="width: 180px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :title="text">
-            {{text}}
+            {{ text }}
           </div>
         </template>
 
         <template slot="biddingNo" slot-scope="text,record">
-          <a @click="openBidding(record,'view')">{{text}}</a>
+          <a @click="openBidding(record, 'view')">{{ text }}</a>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <span v-if="record.biddingStatus != '4'">
-            <a @click="giveUp(record)" >废标</a>
-            <a-divider type="vertical"/>
+            <a @click="giveUp(record)">废标</a>
+            <a-divider type="vertical" />
           </span>
           <span v-if="record.biddingStatus == '0'">
             <a @click="toChange(record)">发布变更</a>
-            <a-divider type="vertical"/>
+            <a-divider type="vertical" />
             <a @click="toChange(record)">专家调整</a>
-            <a-divider type="vertical"/>
+            <a-divider type="vertical" />
           </span>
-<!--          <span v-if="record.biddingStatus == '1'">-->
-<!--            <div>-->
-<!--              <a @click="frozen(record)">冻结</a>-->
-<!--              <a-divider type="vertical"/>-->
-<!--              <a @click="stop(record)">暂停</a>-->
-<!--            </div>-->
-<!--           </span>-->
-           <a @click="openBidding(record,'edit')" v-if="record.biddingStatus == '0'">开标</a>
-           <a-divider type="vertical" v-if="record.biddingStatus == '0'"/>
-           <a v-if="record.biddingStatus == '3'" @click="handleFix(record)">查看定标结果</a>
-           <a-divider type="vertical" v-if="record.biddingStatus == '3'"/>
-<!--           <a v-if="record.biddingStatus == '3' && record.isNotice == '0'" @click="sendNotice(record)">发布公告</a>-->
-<!--           <a-divider type="vertical" v-if="record.biddingStatus == '3' && record.isNotice == '0'"/>-->
-           <!--招标详情-->
-           <a @click="handleEdit(record,'0')">查看详情</a>
-           <!--招标汇总-->
-          <a-divider type="vertical" v-if="record.biddingStatus != '0'"/>
-           <a @click="handleEdit(record,'1')" v-if="record.biddingStatus != '0'">评标详情</a>
+          <!--          <span v-if="record.biddingStatus == '1'">-->
+          <!--            <div>-->
+          <!--              <a @click="frozen(record)">冻结</a>-->
+          <!--              <a-divider type="vertical"/>-->
+          <!--              <a @click="stop(record)">暂停</a>-->
+          <!--            </div>-->
+          <!--           </span>-->
+          <a @click="openBidding(record, 'edit')" v-if="record.biddingStatus == '0'">开标</a>
+          <a-divider type="vertical" v-if="record.biddingStatus == '0'" />
+          <a v-if="record.biddingStatus == '3'" @click="handleFix(record)">查看定标结果</a>
+          <a-divider type="vertical" v-if="record.biddingStatus == '3'" />
+          <!--           <a v-if="record.biddingStatus == '3' && record.isNotice == '0'" @click="sendNotice(record)">发布公告</a>-->
+          <!--           <a-divider type="vertical" v-if="record.biddingStatus == '3' && record.isNotice == '0'"/>-->
+          <!--招标详情-->
+          <a @click="handleEdit(record, '0')">查看详情</a>
+          <!--招标汇总-->
+          <a-divider type="vertical" v-if="record.biddingStatus != '0'" />
+          <a @click="handleEdit(record, '1')" v-if="record.biddingStatus != '0'">评标详情</a>
 
-           <a-divider type="vertical" v-if="record.biddingStatus == '8' " v-has="'bidding:sure'"/>
-           <a @click="handleOpen(record,'2')" v-if="record.biddingStatus == '8'" v-has="'bidding:sure'">进入定标</a>
+          <a-divider type="vertical" v-if="record.biddingStatus == '8'" v-has="'bidding:sure'" />
+          <a @click="handleOpen(record, '2')" v-if="record.biddingStatus == '8'" v-has="'bidding:sure'">进入定标</a>
 
-           <a-divider type="vertical" v-if="record.biddingStatus == '8' || record.biddingStatus == '2'" />
-           <a @click="openProfessionals(record,'2')" v-if="record.biddingStatus == '8' || record.biddingStatus == '2'" >重新评标</a>
+          <a-divider type="vertical" v-if="record.biddingStatus == '8' || record.biddingStatus == '2'" />
+          <a @click="openProfessionals(record, '2')"
+            v-if="record.biddingStatus == '8' || record.biddingStatus == '2'">重新评标</a>
         </span>
 
       </a-table>
@@ -128,12 +121,7 @@
     <bidding-main-to-evaluate-form ref="evaluateForm" @ok="modalFormOk"></bidding-main-to-evaluate-form>
     <fix-bidding-form ref="fixForm" @ok="modalFormOk"></fix-bidding-form>
 
-    <a-modal
-      title="重新评标"
-      width="30%"
-      :visible="visible1"
-      @ok="toSubmit"
-      @cancel="toCancel">
+    <a-modal title="重新评标" width="30%" :visible="visible1" @ok="toSubmit" @cancel="toCancel">
       <a-row>
         <a-col :span="4">
           <span>
@@ -142,7 +130,7 @@
         </a-col>
         <a-col :span="8">
           <a-select style="width: 100%" v-model="ruleForm.professionalId">
-            <a-select-option v-for="(item,index) in userList" :key="item.professionalId" :value="item.professionalId">
+            <a-select-option v-for="(item, index) in userList" :key="item.professionalId" :value="item.professionalId">
               {{ item.professionalName }}
             </a-select-option>
           </a-select>
@@ -151,12 +139,7 @@
     </a-modal>
 
 
-    <a-modal
-      title="废标原因"
-      width="30%"
-      :visible="toFail"
-      @ok="submitToFail"
-      @cancel="cancelToFail">
+    <a-modal title="废标原因" width="30%" :visible="toFail" @ok="submitToFail" @cancel="cancelToFail">
       <div>
         <span style="float: left">
           废标原因:
@@ -165,12 +148,7 @@
       </div>
     </a-modal>
 
-    <a-modal
-      title="流标原因"
-      width="30%"
-      :visible="toFlow"
-      @ok="submitToFlow"
-      @cancel="cancelToFlow">
+    <a-modal title="流标原因" width="30%" :visible="toFlow" @ok="submitToFlow" @cancel="cancelToFlow">
       <div>
         <span style="float: left">
           流标原因:
@@ -179,12 +157,7 @@
       </div>
     </a-modal>
 
-    <a-modal
-      title="冻结原因"
-      width="30%"
-      :visible="toFrozen"
-      @ok="submitToFrozen"
-      @cancel="cancelToFrozen">
+    <a-modal title="冻结原因" width="30%" :visible="toFrozen" @ok="submitToFrozen" @cancel="cancelToFrozen">
       <div>
         <span style="float: left">
           冻结原因:
@@ -193,12 +166,7 @@
       </div>
     </a-modal>
 
-    <a-modal
-      title="暂停原因"
-      width="30%"
-      :visible="toStop"
-      @ok="submitToStop"
-      @cancel="cancelToStop">
+    <a-modal title="暂停原因" width="30%" :visible="toStop" @ok="submitToStop" @cancel="cancelToStop">
       <div>
         <span style="float: left">
           暂停原因:
@@ -232,7 +200,7 @@ let columns = [
     key: 'rowIndex',
     width: 60,
     align: 'center',
-    customRender: function(t, r, index) {
+    customRender: function (t, r, index) {
       return parseInt(index) + 1
     }
   },
@@ -279,7 +247,7 @@ let columns = [
     align: 'center',
     dataIndex: 'createTime',
     sorter: true,
-    customRender: function(text) {
+    customRender: function (text) {
       return !text ? '' : (text.length > 10 ? text.substr(0, 10) : text)
     },
     width: 120,
@@ -364,22 +332,22 @@ export default {
   },
   data() {
     return {
-      ruleForm:{
-        professionalId:'',
-        biddingId:''
+      ruleForm: {
+        professionalId: '',
+        biddingId: ''
       },
-      userList:[],
-      visible1:false,
+      userList: [],
+      visible1: false,
       columns,
-      toStop:false,
-      toFrozen:false,
-      toFlow:false,
-      nowRow:{},
-      toFail:false,
-      queryParam:{
-        biddingStatus:'all'
+      toStop: false,
+      toFrozen: false,
+      toFlow: false,
+      nowRow: {},
+      toFail: false,
+      queryParam: {
+        biddingStatus: 'all'
       },
-      tabKey:'all',
+      tabKey: 'all',
       description: '招标主表管理页面',
       // 表头
       // columns: [
@@ -460,15 +428,15 @@ export default {
     this.columnsDrop()
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`
     }
   },
   methods: {
-    toSubmit(){
+    toSubmit() {
       let that = this;
       let professionalId = that.ruleForm.professionalId;
-      if(isNullOrEmpty(professionalId)){
+      if (isNullOrEmpty(professionalId)) {
         that.$message.error("请选择需要退回的评标人员");
         return;
       }
@@ -476,12 +444,12 @@ export default {
       that.$confirm({
         content: `是否确认提交`,
         onOk: () => {
-          postAction(url,that.ruleForm).then(res => {
-            if(res.success){
+          postAction(url, that.ruleForm).then(res => {
+            if (res.success) {
               that.$message.success("提交成功");
               that.toCancel();
               that.searchQuery();
-            }else{
+            } else {
               that.$message.error("提交失败");
             }
           })
@@ -492,21 +460,21 @@ export default {
     toCancel() {
       this.visible1 = false;
     },
-    openProfessionals(record){
+    openProfessionals(record) {
       this.visible1 = true;
       this.ruleForm.professionalId = "";
       this.ruleForm.biddingId = record.id;
       let url = "/srm/biddingMain/fetchHasProfessionals";
-      getAction(url,{id:record.id}).then(res => {
+      getAction(url, { id: record.id }).then(res => {
         this.userList = res.result;
       })
     },
-    sendNotice(record){
+    sendNotice(record) {
       let url = "/srm/biddingMain/sendNotice";
-      postAction(url,record).then(res => {
-        if(res.success){
+      postAction(url, record).then(res => {
+        if (res.success) {
           this.$message.success("提交成功");
-        }else{
+        } else {
           this.$message.success("提交失败");
         }
       })
@@ -532,43 +500,43 @@ export default {
         }
       })
     },
-    handleFix(record){
-      this.$refs.fixForm.edit(record,'view');
+    handleFix(record) {
+      this.$refs.fixForm.edit(record, 'view');
     },
-    handleOpen(record){
-      this.$refs.fixForm.edit(record,'open');
+    handleOpen(record) {
+      this.$refs.fixForm.edit(record, 'open');
     },
-    toChange(record){
-      this.$refs.modalForm.editTwo(record,'change');
+    toChange(record) {
+      this.$refs.modalForm.editTwo(record, 'change');
       this.$refs.modalForm.title = "编辑";
       this.$refs.modalForm.disableSubmit = false;
     },
     //暂停
-    stop(record){
+    stop(record) {
       this.toStop = true;
       this.nowRow = record;
       this.nowRow.reason = '';
     },
-    cancelToStop(){
+    cancelToStop() {
       this.toStop = false;
     },
-    submitToStop(){
+    submitToStop() {
       let that = this;
       let url = "/srm/biddingMain/editEntity";
       let reason = that.nowRow.reason;
-      if(isNullOrEmpty(reason)){
+      if (isNullOrEmpty(reason)) {
         that.$message.error("请输入暂停原因");
         return;
       }
       let param = {
-        id:that.nowRow.id,
-        biddingStatus:'7',
-        reason:reason
+        id: that.nowRow.id,
+        biddingStatus: '7',
+        reason: reason
       }
       that.$confirm({
         content: `是否确认提交`,
         onOk: () => {
-          putAction(url,param).then(res => {
+          putAction(url, param).then(res => {
             that.$message.success("提交成功");
             that.cancelToStop();
             that.searchQuery();
@@ -577,31 +545,31 @@ export default {
       })
     },
     //冻结
-    frozen(record){
+    frozen(record) {
       this.toFrozen = true;
       this.nowRow = record;
       this.nowRow.reason = '';
     },
-    cancelToFrozen(){
+    cancelToFrozen() {
       this.toFrozen = false;
     },
-    submitToFrozen(){
+    submitToFrozen() {
       let that = this;
       let url = "/srm/biddingMain/editEntity";
       let reason = that.nowRow.reason;
-      if(isNullOrEmpty(reason)){
+      if (isNullOrEmpty(reason)) {
         that.$message.error("请输入冻结原因");
         return;
       }
       let param = {
-        id:that.nowRow.id,
-        biddingStatus:'6',
-        reason:reason
+        id: that.nowRow.id,
+        biddingStatus: '6',
+        reason: reason
       }
       that.$confirm({
         content: `是否确认提交`,
         onOk: () => {
-          putAction(url,param).then(res => {
+          putAction(url, param).then(res => {
             that.$message.success("提交成功");
             that.cancelToFrozen();
             that.searchQuery();
@@ -610,26 +578,26 @@ export default {
       })
     },
     //流标
-    cancelToFlow(){
+    cancelToFlow() {
       this.toFlow = false;
     },
-    submitToFlow(){
+    submitToFlow() {
       let that = this;
       let url = "/srm/biddingMain/editEntity";
       let reason = that.nowRow.reason;
-      if(isNullOrEmpty(reason)){
+      if (isNullOrEmpty(reason)) {
         that.$message.error("请输入流标原因");
         return;
       }
       let param = {
-        id:that.nowRow.id,
-        biddingStatus:'5',
-        reason:reason
+        id: that.nowRow.id,
+        biddingStatus: '5',
+        reason: reason
       }
       that.$confirm({
         content: `是否确认提交`,
         onOk: () => {
-          putAction(url,param).then(res => {
+          putAction(url, param).then(res => {
             that.$message.success("提交成功");
             that.cancelToFlow();
             that.searchQuery();
@@ -637,75 +605,83 @@ export default {
         }
       })
     },
-    flow(record){
+    flow(record) {
       this.toFlow = true;
       this.nowRow = record;
       this.nowRow.reason = '';
     },
     //废标
-    submitToFail(){
+    submitToFail() {
       let that = this;
       let reason = that.nowRow.reason;
-      if(isNullOrEmpty(reason)){
+      if (isNullOrEmpty(reason)) {
         that.$message.error("请输入废标原因");
         return;
       }
       let url = "/srm/biddingMain/editEntity";
       let param = {
-        id:that.nowRow.id,
-        biddingStatus:'4',
-        reason:reason
+        id: that.nowRow.id,
+        biddingStatus: '4',
+        reason: reason
       }
       that.$confirm({
         content: `是否确认提交`,
         onOk: () => {
-          putAction(url,param).then(res => {
-            if(res.success){
+          putAction(url, param).then(res => {
+            if (res.success) {
               that.$message.success("提交成功");
               that.cancelToFail();
               that.searchQuery();
-            }else{
+            } else {
               that.$message.error(res.message);
             }
           })
         }
       })
     },
-    cancelToFail(){
+    cancelToFail() {
       this.toFail = false;
     },
-    giveUp(record){
+    giveUp(record) {
       this.toFail = true;
       this.nowRow = record;
       this.nowRow.reason = '';
     },
-    openBidding(record,type){
-      if(type == 'edit'){
+    openBidding(record, type) {
+      if (type == 'edit') {
         this.$refs.openForm.edit(record);
-      }else {
+      } else {
         this.$refs.openForm.view(record);
       }
 
     },
-    handleEdit (record,type) {
-      if(type == '0'){
-        this.$refs.modalForm.editTwo(record,'view');
+    handleEdit(record, type) {
+      if (type == '0') {
+        this.$refs.modalForm.editTwo(record, 'view');
         this.$refs.modalForm.title = "编辑";
         this.$refs.modalForm.disableSubmit = true;
-      }else if(type == '1'){
+      } else if (type == '1') {
         this.$refs.evaluateForm.edit(record);
       }
     },
-    handleChange(tabKey){
+    handleChange(tabKey) {
       this.searchReset();
     },
     searchReset() {
       this.queryParam = {};
-      if(this.tabKey == '2'){
-        this.queryParam.biddingStatus = '2,8';
-      }else{
-        this.queryParam.biddingStatus = this.tabKey;
+
+      if (this.tabKey == 0) {
+        this.tabKey1 = "all";
+      } else {
+        this.tabKey1 = this.tabKey - 1;
+
+        if (this.tabKey1 == '2') {
+          this.queryParam.biddingStatus = '2,8';
+        } else {
+          this.queryParam.biddingStatus = this.tabKey1;
+        }
       }
+
 
       this.loadData(1);
     },

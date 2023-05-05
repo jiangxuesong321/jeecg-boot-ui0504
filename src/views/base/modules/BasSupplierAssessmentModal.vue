@@ -34,8 +34,9 @@
       // },
       add () {
         this.visible=true
+        var localRecord = JSON.parse(window.localStorage.getItem("localRecord"));
         this.$nextTick(()=>{
-          this.$refs.realForm.add();
+          this.$refs.realForm.add(localRecord );
         })
       },
       edit (record) {

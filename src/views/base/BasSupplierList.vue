@@ -817,13 +817,11 @@ export default {
       this.$refs.detailForm.disableSubmit = true;
     },
     handleAssessment:function(record){
-// this.$refs.assessmentModal.add(record);
-//       this.$refs.assessmentModal.setData(record);
+      // 新增
       this.$refs.assessmentModal.visible=false;
-      // this.$refs.assessmentForm.title="供应商考核指标";
+      // List界面
       this.$refs.assessmentForm.visible=true;
-      // this.$refs.assessmentForm.setData(record);
-      // this.$refs.assessmentForm.disableSubmit = true;
+      this.$refs.assessmentForm.setData(record);
     },
     searchReset() {
       this.queryParam = {};

@@ -80,7 +80,8 @@ export const JeecgListMixin = {
       if (arg === 1) {
         this.ipagination.current = 1;
       }
-      var params = this.getQueryParams();//查询条件
+     
+      var params = this.getQueryParams(arg);//查询条件
       this.loading = true;
       getAction(this.url.list, params).then((res) => {
         if (res.success) {
@@ -115,14 +116,20 @@ export const JeecgListMixin = {
       }
       this.loadData(1)
     },
-    getQueryParams() {
+    getQueryParams(arg) {
+      
       //获取查询条件
       let sqp = {}
       if(this.superQueryParams){
         sqp['superQueryParams']=encodeURI(this.superQueryParams)
         sqp['superQueryMatchType'] = this.superQueryMatchType
       }
+      
+      if( arg !== undefined && isNaN(Number(arg,10))){
+        this.filters = {"supplierId" : arg.code}
+      }
       var param = Object.assign(sqp, this.queryParam, this.isorter ,this.filters);
+      
       param.field = this.getQueryField();
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;

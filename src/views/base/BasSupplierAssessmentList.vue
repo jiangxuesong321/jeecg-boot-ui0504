@@ -9,66 +9,11 @@
     destroyOnClose
     :visible="visible">
   <a-card :bordered="false">
-    <!-- 查询区域 -->
-<!--    <div class="table-page-search-wrapper">-->
-<!--      <a-form layout="inline" @keyup.enter.native="searchQuery">-->
-<!--        <a-row :gutter="24">-->
-<!--          <a-col :xl="6" :lg="7" :md="8" :sm="24">-->
-<!--            <a-form-item label="供应商名">-->
-<!--              <a-input placeholder="请输入供应商名" v-model="queryParam.supplierName"></a-input>-->
-<!--            </a-form-item>-->
-<!--          </a-col>-->
-<!--          <a-col :xl="6" :lg="7" :md="8" :sm="24">-->
-<!--            <a-form-item label="指标内容">-->
-<!--              <a-input placeholder="请输入指标内容" v-model="queryParam.assessmentContent"></a-input>-->
-<!--            </a-form-item>-->
-<!--          </a-col>-->
-<!--          <template v-if="toggleSearchStatus">-->
-<!--            <a-col :xl="6" :lg="7" :md="8" :sm="24">-->
-<!--              <a-form-item label="指标分类">-->
-<!--                <a-input placeholder="请输入指标分类" v-model="queryParam.assessmentCategory"></a-input>-->
-<!--              </a-form-item>-->
-<!--            </a-col>-->
-<!--          </template>-->
-<!--          <a-col :xl="6" :lg="7" :md="8" :sm="24">-->
-<!--            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">-->
-<!--              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>-->
-<!--              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>-->
-<!--              <a @click="handleToggleSearch" style="margin-left: 8px">-->
-<!--                {{ toggleSearchStatus ? '收起' : '展开' }}-->
-<!--                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>-->
-<!--              </a>-->
-<!--            </span>-->
-<!--          </a-col>-->
-<!--        </a-row>-->
-<!--      </a-form>-->
-<!--    </div>-->
-    <!-- 查询区域-END -->
-
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-<!--      <a-button type="primary" icon="download" @click="handleExportXls('供应商细项目考核指标表')">导出</a-button>-->
-<!--      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
-<!--        <a-button type="primary" icon="import">导入</a-button>-->
-<!--      </a-upload>-->
-      <!-- 高级查询区域 -->
-<!--      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>-->
-<!--      <a-dropdown v-if="selectedRowKeys.length > 0">-->
-<!--        <a-menu slot="overlay">-->
-<!--          <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>-->
-<!--        </a-menu>-->
-<!--        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>-->
-<!--      </a-dropdown>-->
     </div>
-
-    <!-- table区域-begin -->
     <div>
-<!--      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">-->
-<!--        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项-->
-<!--        <a style="margin-left: 24px" @click="onClearSelected">清空</a>-->
-<!--      </div>-->
-
       <a-table
         ref="table"
         size="middle"
@@ -163,7 +108,8 @@
           {
             title:'供应商ID',
             align:"center",
-            dataIndex: 'supplierId_dictText'
+            // dataIndex: 'supplierId_dictText'
+            dataIndex: 'supplierId'
           },
           {
             title:'供应商名',
@@ -224,7 +170,11 @@
         this.model = Object.assign({}, record);
       },
       setData(record){
-        this.modelDefault = JSON.parse(JSON.stringify(record));
+        this.loadData(record);
+        window.localStorage.setItem("localRecord",JSON.stringify(record));
+      
+
+        // this.$refs.modalForm.add(record);
       },
       getSuperFieldList(){
         let fieldList=[];
