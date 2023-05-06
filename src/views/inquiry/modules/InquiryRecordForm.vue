@@ -70,8 +70,9 @@
                 <a-form-model-item label="报价截止日期" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3"
                   prop="quotationDeadline">
                   <!--                  <span v-if="formDisabled">{{ model.quotationDeadline }}</span>-->
-                  <j-date placeholder="请选择报价截止日期" v-model="model.quotationDeadline" style="width: 100%"
-                    :disabled="formDisabled" />
+                  <!-- <j-date placeholder="请选择报价截止日期" v-model="model.quotationDeadline" style="width: 100%"
+                    :disabled="formDisabled" /> -->
+                    <a-date-picker show-time placeholder="请选择报价截止日期" v-model="model.quotationDeadline" style="width: 100%" :disabled="formDisabled"/>
                 </a-form-model-item>
               </a-col>
 

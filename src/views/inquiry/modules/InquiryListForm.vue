@@ -48,7 +48,8 @@
             <a-col :span="8">
               <a-form-model-item label="报价截止日期" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3"
                                  prop="quotationDeadline">
-                <j-date placeholder="请选择报价截止日期" v-model="model.quotationDeadline" style="width: 100%"/>
+                <!-- <j-date placeholder="请选择报价截止日期" v-model="model.quotationDeadline" style="width: 100%"/> -->
+                <a-date-picker show-time placeholder="请选择报价截止日期" v-model="model.quotationDeadline" style="width: 100%"/>
               </a-form-model-item>
             </a-col>
 
