@@ -170,38 +170,38 @@ import { iegAmount, isNullOrEmpty } from '@/utils/util'
       width:120,
       scopedSlots: { customRender: 'contractNumber' }
     },
-    {
-      title:'项目名称',
-      align:"center",
-      sorter: true,
-      dataIndex: 'projectName',
-      scopedSlots: { customRender: 'projectName' },
-      width:120,
-    },
-    {
-      title:'物料名称',
-      align:"center",
-      sorter: true,
-      dataIndex: 'deviceName',
-      width:120,
-      scopedSlots: { customRender: 'deviceName' }
-    },
-    {
-      title:'设备序号',
-      align:"center",
-      sorter: true,
-      dataIndex: 'deviceSerialNumber',
-      width:120,
-      scopedSlots: { customRender: 'deviceSerialNumber' }
-    },
-    {
-      title:'数量',
-      align:"center",
-      sorter: true,
-      dataIndex: 'qty',
-      width:120,
-      scopedSlots: { customRender: 'qty' }
-    },
+    // {
+    //   title:'项目名称',
+    //   align:"center",
+    //   sorter: true,
+    //   dataIndex: 'projectName',
+    //   scopedSlots: { customRender: 'projectName' },
+    //   width:120,
+    // },
+    // {
+    //   title:'物料名称',
+    //   align:"center",
+    //   sorter: true,
+    //   dataIndex: 'deviceName',
+    //   width:120,
+    //   scopedSlots: { customRender: 'deviceName' }
+    // },
+    // {
+    //   title:'设备序号',
+    //   align:"center",
+    //   sorter: true,
+    //   dataIndex: 'deviceSerialNumber',
+    //   width:120,
+    //   scopedSlots: { customRender: 'deviceSerialNumber' }
+    // },
+    // {
+    //   title:'数量',
+    //   align:"center",
+    //   sorter: true,
+    //   dataIndex: 'qty',
+    //   width:120,
+    //   scopedSlots: { customRender: 'qty' }
+    // },
     // {
     //   title:'业务员',
     //   align:"center",

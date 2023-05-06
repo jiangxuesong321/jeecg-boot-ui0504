@@ -405,6 +405,14 @@
       width:160,
       scopedSlots: { customRender: 'contractSecondParty' }
     },
+    {
+      title:'SAP PO编码',
+      align:"center",
+      sorter: true,
+      dataIndex: 'sapPo',
+      width:160,
+      scopedSlots: { customRender: 'sapPo' }
+    },
     // {
     //   title:'询报价编号',
     //   align:"center",
@@ -706,6 +714,14 @@
             dataIndex: 'contractSecondParty',
             width:160,
             scopedSlots: { customRender: 'contractSecondParty' }
+          },
+          {
+            title:'SAP PO编码',
+            align:"center",
+            sorter: true,
+            dataIndex: 'sapPo',
+            width:160,
+            scopedSlots: { customRender: 'sapPo' }
           },
           // {
           //   title:'招投标编号',
