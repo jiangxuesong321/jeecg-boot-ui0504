@@ -203,10 +203,10 @@ export default {
             return;
           }
         }
-        if(!isRecommend){
-          that.$message.error("请选择推荐的供应商");
-          return;
-        }
+        // if(!isRecommend){
+        //   that.$message.error("请选择推荐的供应商");
+        //   return;
+        // }
         let url = "/srm/biddingMain/submitTemplate";
         let param = {
           ids:that.ids,
