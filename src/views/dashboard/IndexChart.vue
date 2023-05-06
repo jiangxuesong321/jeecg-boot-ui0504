@@ -15,6 +15,8 @@
     <a-row :gutter="24">
       <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
         <a-card class="card-main-index1 ">
+          <img src="~@/assets/大宗商品.png"
+            style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content orange-money">
             <div style="display: inline-block;">
               <div class="card-title-font">
@@ -31,6 +33,8 @@
       </a-col>
       <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
         <a-card class="card-main-index1 ">
+          <img src="~@/assets/物资.png"
+            style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content green-money">
             <div style="display: inline-block;">
               <div class="card-title-font">
@@ -45,8 +49,10 @@
           </div>
         </a-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
+      <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '20px' }">
         <a-card class="card-main-index1 ">
+          <img src="~@/assets/服务.png"
+            style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content pink-money">
             <div style="display: inline-block;">
               <div class="card-title-font">
@@ -64,9 +70,9 @@
     </a-row>
     <a-row :gutter="24">
 
-      <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
+      <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '20px' }">
         <a-card class="card-main-index1 ">
-          <img src="~@/assets/img_1.png"
+          <img src="~@/assets/生产制造.png"
             style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content yellow-number">
             <div style="display: inline-block;">
@@ -78,9 +84,9 @@
           </div>
         </a-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
+      <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '20px' }">
         <a-card class="card-main-index1 ">
-          <img src="~@/assets/img_2.png"
+          <img src="~@/assets/物流.png"
             style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content blue-number">
             <div style="display: inline-block;">
@@ -92,9 +98,9 @@
           </div>
         </a-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
+      <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '20px' }">
         <a-card class="card-main-index1 ">
-          <img src="~@/assets/img_3.png"
+          <img src="~@/assets/互联网.png"
             style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content green-number">
             <div style="display: inline-block;">
@@ -110,8 +116,8 @@
     </a-row>
     <a-row :gutter="24">
       <!-- <a-col :span="24" > -->
-   
-      <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
+
+      <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '20px' }">
         <a-card style="max-height: 420px;padding-top: 1.2rem;">
           <!--          <div class="right-content">-->
           <!--            <div style="display: inline-block;">-->
@@ -125,30 +131,52 @@
           <!--            </div>-->
           <!--          </div>-->
           <a-tabs v-model:activeKey="activeKey" @change="handleChange">
-            <a-tab-pane key="0" tab="全部" ></a-tab-pane>
+            <a-tab-pane key="0" tab="全部"></a-tab-pane>
             <a-tab-pane key="1" tab="工程"></a-tab-pane>
             <a-tab-pane key="2" tab="服务"></a-tab-pane>
             <a-tab-pane key="3" tab="货物"></a-tab-pane>
             <a-tab-pane key="4" tab="其他"></a-tab-pane>
           </a-tabs>
-          <a-tabs v-model:activeKey="activeKeyChild" @change="isZhaobiaoChange">
-            <a-tab-pane key="0" tab="招标采购公告"></a-tab-pane>
-            <a-tab-pane key="1" tab="非招标采购公告"></a-tab-pane>
-          </a-tabs>
-
-          <a-list itemLayout="horizontal" :dataSource="data">
-            <a-list-item>
-              <a-list-item-meta>
-                <a slot="title">[公开招标]</a>
-                <a slot="title">
-                  复星蜂巢工程项目类招标公告</a>
-              </a-list-item-meta>
-              <template>
-                <div>2023-5-6</div>
-              </template>
-            </a-list-item>
-          </a-list>
-
+          <div>
+            <a-tabs v-model:activeKey="activeKeyChild" @change="isZhaobiaoChange" style="display: inline-block;">
+              <a-tab-pane key="0" tab="招标采购公告"></a-tab-pane>
+              <a-tab-pane key="1" tab="非招标采购公告"></a-tab-pane>
+            </a-tabs>
+            <a style="margin-left: 313px;">加载更多>></a>
+          </div>
+          <div v-if="gongkaiVisible">
+            <a-list itemLayout="horizontal">
+              <a-list-item :key="index" v-for="(item, index) in dataSource">
+                <a-list-item-meta>
+                  <a slot="title" style="color: #3f88e0;font-weight: 700;">[{{ item.biddingType_dictText }}]</a>
+                  <!-- <span style="color: #3f88e0;font-weight: 700;"></span> -->
+                  <a slot="title">{{ item.biddingName }}</a>
+                  <img v-if="item.newTag" slot="title" src="~@/assets/new.png"
+                    style="width: 16px;margin-left: 4px;margin-bottom: 1px" />
+                </a-list-item-meta>
+                <template>
+                  <div>{{ item.createTime }}</div>
+                </template>
+              </a-list-item>
+            </a-list>
+          </div>
+          <!-- <a-list itemLayout="horizontal" :visible="xunbiVisible"> -->
+          <div v-if="xunbiVisible">
+            <a-list itemLayout="horizontal" visible="false">
+              <a-list-item :key="index" v-for="(item, index) in dataSource1">
+                <a-list-item-meta>
+                  <!-- <a slot="title"></a> -->
+                  <a slot="title" style="color: #3f88e0;font-weight: 700;">[{{ item.invitationMethod_dictText }}]</a>
+                  <a slot="title">{{ item.inquiryName }}</a>
+                  <img v-if="item.newTag" slot="title" src="~@/assets/new.png"
+                    style="width: 16px;margin-left: 4px;margin-bottom: 1px" />
+                </a-list-item-meta>
+                <template>
+                  <div>{{ item.createTime }}</div>
+                </template>
+              </a-list-item>
+            </a-list>
+          </div>
         </a-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="12">
@@ -341,7 +369,11 @@ export default {
       visible1: false,
       projAreaList: [],
       projTypeList: [],
+
       visible: false,
+      xunbiVisible: false,
+      gongkaiVisible: true,
+      newTag: false,
       ipagination: {
         current: 1,
         pageSize: 10,
@@ -354,6 +386,7 @@ export default {
         total: 0
       },
       dataSource: [],
+      dataSource1: [],
       columns: [
         {
           title: '序号',
@@ -471,8 +504,8 @@ export default {
         text: '询价比价'
       }],
       indicator: <a-icon type="loading" style="font-size: 24px" spin />,
-      activeKey:'0',
-      activeKeyChild:'0'
+      activeKey: '0',
+      activeKeyChild: '0'
     }
   },
   watch: {
@@ -512,11 +545,12 @@ export default {
     //子项目数量
     this.fetchChildProgress();
     //项目清单
-    this.loadData();
-    setTimeout(() => {
-      this.$refs.chart2.initData(this.model.percent);
-      this.$refs.chart3.initData(this.model.cpercent);
-    }, 1000)
+    let url = "srm/biddingMain/pageList";
+    this.loadData(1, url);
+    // setTimeout(() => {
+    //   this.$refs.chart2.initData(this.model.percent);
+    //   this.$refs.chart3.initData(this.model.cpercent);
+    // }, 1000)
   },
   mounted() {
 
@@ -634,23 +668,73 @@ export default {
       this.ipagination = pagination;
       this.loadData();
     },
-    loadData(arg) {
+    loadData(arg, url) {
+      var that = this;
       this.dataSource = [];
-      let url = "/srm/projBase/list";
+
       //加载数据 若传入参数1则加载第一页的内容
       if (arg === 1) {
         this.ipagination.current = 1;
       }
       var params = {};
-      params.pageNo = this.ipagination.current;
-      params.pageSize = this.ipagination.pageSize;
-      params.id = this.queryParam.projId;
-      params.column = 'projCode';
-      params.order = 'asc';
+      // params.pageNo = this.ipagination.current;
+      // params.pageSize = this.ipagination.pageSize;
+      // params.id = this.queryParam.projId;
+      // params.column = 'projCode';
+      // params.order = 'asc';
+      params.pageSize = 5;
+      getAction(url, params).then((res) => {
+        if (res.success) {
+
+          var NewDay = that.getDay(-31);
+          for (var i = 0; i < res.result.records.length; i++) {
+            if (res.result.records[i].createTime > NewDay) {
+              res.result.records[i].newTag = true
+            }
+          }
+
+          //update-begin---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
+          this.dataSource = res.result.records || res.result;
+
+          if (res.result.total) {
+            this.ipagination.total = res.result.total;
+          } else {
+            this.ipagination.total = 0;
+          }
+          //update-end---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
+        } else {
+          this.$message.warning(res.message)
+        }
+      }).finally(() => {
+        this.loading = false
+      })
+    },
+    loadData1(arg, url) {
+      this.dataSource1 = [];
+      var that = this;
+
+      //加载数据 若传入参数1则加载第一页的内容
+      if (arg === 1) {
+        this.ipagination.current = 1;
+      }
+      var params = {};
+      // params.pageNo = this.ipagination.current;
+      // params.pageSize = this.ipagination.pageSize;
+      // params.id = this.queryParam.projId;
+      // params.column = 'projCode';
+      // params.order = 'asc';
+      params.pageSize = 5;
       getAction(url, params).then((res) => {
         if (res.success) {
           //update-begin---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
-          this.dataSource = res.result.records || res.result;
+          var NewDay = that.getDay(-31);
+          for (var i = 0; i < res.result.records.length; i++) {
+            if (res.result.records[i].createTime > NewDay) {
+              res.result.records[i].newTag = true
+            }
+          }
+
+          this.dataSource1 = res.result.records || res.result;
           if (res.result.total) {
             this.ipagination.total = res.result.total;
           } else {
@@ -718,8 +802,8 @@ export default {
       this.fetchContractQty();
       //子项目数量
       this.fetchChildProgress();
-
-      this.loadData();
+      let url = "srm/biddingMain/pageList";
+      this.loadData(1, url);
 
       setTimeout(() => {
         this.$refs.chart2.initData(this.model.percent);
@@ -887,22 +971,60 @@ export default {
         }
       })
     },
-    handleChange(tabKey){
-      if(tabKey == '0'){
+    handleChange(tabKey) {
+      if (tabKey == '0') {
         this.queryParam.status = '0';
-      }else if(tabKey == '1'){
+      } else if (tabKey == '1') {
         this.queryParam.status = '1';
-      }else if(tabKey == '2'){
+      } else if (tabKey == '2') {
         this.queryParam.status = '2';
-      }else if(tabKey == '3'){
+      } else if (tabKey == '3') {
         this.queryParam.status = '3';
-      }else if(tabKey == '4'){
+      } else if (tabKey == '4') {
         this.queryParam.status = '4';
       }
       this.searchQuery();
     },
     searchQuery() {
-      this.loadData(1);
+      let url = "srm/biddingMain/pageList";
+      this.loadData(1, url);
+    },
+    isZhaobiaoChange(tabKey) {
+      if (tabKey == '0') {
+        // 招标采购公告
+        this.xunbiVisible = false;
+        this.gongkaiVisible = true;
+        this.queryParam.status = '0';
+        let url = "srm/biddingMain/pageList";
+        this.loadData(1, url);
+      } else if (tabKey == '1') {
+        // 非采购招标
+        this.xunbiVisible = true;
+        this.gongkaiVisible = false;
+        this.queryParam.status = '1';
+        let url = "srm/inquiryList/list";
+        this.loadData1(1, url);
+      }
+
+    },
+
+    doHandleMonth(month) {
+      var m = month;
+      if (month.toString().length == 1) {
+        m = "0" + month;
+      }
+      return m;
+    },
+    getDay(day) {
+      var today = new Date();
+      var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+      today.setTime(targetday_milliseconds); //注意，这行是关键代码
+      var tYear = today.getFullYear();
+      var tMonth = today.getMonth();
+      var tDate = today.getDate();
+      tMonth = this.doHandleMonth(tMonth + 1);
+      tDate = this.doHandleMonth(tDate);
+      return tYear + "-" + tMonth + "-" + tDate;
     },
   }
 }
