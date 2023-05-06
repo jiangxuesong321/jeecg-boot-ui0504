@@ -71,14 +71,19 @@
         :loading="loading"
         @change="handleTableChange">
 
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleGen(record,tabKey)">生成合同</a>
+          <a-divider type="vertical" />
+          <a @click="handleDetail(record,tabKey)" style="margin-right: 10px" v-if="tabKey == 1">评标记录</a>
+          <a @click="handleEdit(record,tabKey)" style="margin-right: 10px" v-if="tabKey == 0">询价记录</a>
         </span>
+     
       </a-table>
-    </div>
+    </div>    
 
     <contract-base-modal ref="modalForm" @ok="modalFormOk"></contract-base-modal>
+    <inquiry-record-form ref="viewForm"  @ok="searchQuery"></inquiry-record-form>
+    <bidding-main-to-professional-form ref="mainForm"></bidding-main-to-professional-form>
   </a-card>
 </template>
 
@@ -90,6 +95,8 @@ import '@/assets/less/TableExpand.less'
 import { getAction } from '@api/manage'
 import Sortable from 'sortablejs'
 import ListColumnsSetter from '@views/components/ListColumnsSetter'
+import InquiryRecordForm from '@views/inquiry/modules/InquiryRecordForm'
+import BiddingMainToProfessionalForm from '@views/bidding/modules/BiddingMainToProfessionalForm'
 import Vue from 'vue'
 
 let columns = [
@@ -227,7 +234,9 @@ export default {
   mixins:[JeecgListMixin],
   components: {
     ContractBaseModal,
-    ListColumnsSetter
+    ListColumnsSetter,
+    InquiryRecordForm,
+    BiddingMainToProfessionalForm
   },
   data () {
     return {
@@ -464,6 +473,15 @@ export default {
     },
     handleGen(record,type){
       this.$refs.modalForm.edit(record,type);
+    },
+    handleDetail(record){
+        this.$refs.mainForm.editTwo(record);
+      },
+
+    handleEdit: function (record) {
+      this.$refs.viewForm.edit(record,1);
+      this.$refs.viewForm.title = "查看比价";
+      this.$refs.viewForm.disabled = true;
     },
     loadData(arg) {
       //加载数据 若传入参数1则加载第一页的内容

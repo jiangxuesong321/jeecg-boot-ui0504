@@ -1,14 +1,7 @@
 <template>
-  <a-drawer
-    :title="title"
-    :width="width"
-    placement="right"
-    :closable="false"
-    :headerStyle="{ textAlign: 'center'}"
-    @close="handleCancel"
-    destroyOnClose
-    :visible="visible">
-    <a-spin :spinning="confirmLoading" >
+  <a-drawer :title="title" :width="width" placement="right" :closable="false" :headerStyle="{ textAlign: 'center' }"
+    @close="handleCancel" destroyOnClose :visible="visible">
+    <a-spin :spinning="confirmLoading">
       <j-form-container>
         <!-- 主表单区域 -->
         <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
@@ -23,18 +16,18 @@
 
               <a-col :span="8">
                 <a-form-model-item label="询报价名称" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3"
-                                   prop="inquiryName">
+                  prop="inquiryName">
                   <!--                  <span v-if="formDisabled">{{ model.inquiryName }}</span>-->
-                  <a-input  v-model="model.inquiryName" placeholder="询报价名称" :disabled="formDisabled"></a-input>
+                  <a-input v-model="model.inquiryName" placeholder="询报价名称" :disabled="formDisabled"></a-input>
                 </a-form-model-item>
               </a-col>
 
               <a-col :span="8">
                 <a-form-model-item label="邀请方式" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3"
-                                   prop="invitationMethod">
+                  prop="invitationMethod">
                   <!--                <a-input v-model="model.invitationMethod" placeholder="邀请方式"></a-input>-->
                   <j-dict-select-tag placeholder="请输入邀请方式" v-model="model.invitationMethod" dictCode="invitation_method"
-                                     :disabled="formDisabled" />
+                    :disabled="formDisabled" />
                 </a-form-model-item>
               </a-col>
 
@@ -66,19 +59,19 @@
 
               <a-col :span="8">
                 <a-form-model-item label="是否单一供应商" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3"
-                                   prop="isOne">
+                  prop="isOne">
                   <!--                <a-input v-model="model.isOne" placeholder="请选择是否单一供应商"></a-input>-->
                   <j-dict-select-tag placeholder="是否单一供应商" v-model="model.isOne" dictCode="is_one"
-                                     :disabled="formDisabled" />
+                    :disabled="formDisabled" />
                 </a-form-model-item>
               </a-col>
 
               <a-col :span="8">
                 <a-form-model-item label="报价截止日期" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3"
-                                   prop="quotationDeadline">
+                  prop="quotationDeadline">
                   <!--                  <span v-if="formDisabled">{{ model.quotationDeadline }}</span>-->
-                  <j-date  placeholder="请选择报价截止日期" v-model="model.quotationDeadline" style="width: 100%"
-                           :disabled="formDisabled" />
+                  <j-date placeholder="请选择报价截止日期" v-model="model.quotationDeadline" style="width: 100%"
+                    :disabled="formDisabled" />
                 </a-form-model-item>
               </a-col>
 
@@ -94,7 +87,7 @@
 
               <a-col :span="8" v-if="model.isOne == '1'">
                 <a-form-model-item label="单一供应商附件" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3"
-                                   prop="otherAttachment">
+                  prop="otherAttachment">
                   <j-upload v-model="model.otherAttachment" :trigger-change="true" :disabled="formDisabled"></j-upload>
                 </a-form-model-item>
               </a-col>
@@ -104,133 +97,142 @@
             <a-button class="float-btn" v-if="!show" @click="toBargainAll" type="dashed">全部发起议价</a-button>
             <table width="100%" class="inquiry-div" style="">
               <thead>
-              <tr style="height: 50px">
-                <th style="width: 40px;">序号</th>
-                <th style="width: 160px;">物料信息</th>
-                <th style="width: 80px;">采购量</th>
-                <th style="width: 180px;">供应商</th>
-                <th style="width: 55px;">币种</th>
-                <th style="width: 60px;">税率(%)</th>
-                <th style="width: 140px;">首次报价(含税单价)</th>
-                <th style="width: 100px;">二次议价</th>
-                <th style="width: 120px;">贸易方式</th>
-                <!--                <th style="width: 80px;">运费</th>-->
-                <th style="width: 100px;">中标数量</th>
-                <th style="width: 120px;">报价品牌</th>
-                <th style="width: 120px;">报价规格</th>
-                <th style="width: 280px;" colspan="2">操作</th>
-              </tr>
+                <tr style="height: 50px">
+                  <th style="width: 40px;">序号</th>
+                  <th style="width: 160px;">物料信息</th>
+                  <th style="width: 80px;">采购量</th>
+                  <th style="width: 180px;">供应商</th>
+                  <th style="width: 55px;">币种</th>
+                  <th style="width: 60px;">税率(%)</th>
+                  <th style="width: 140px;">首次报价(含税单价)</th>
+                  <th style="width: 100px;">二次议价</th>
+                  <th style="width: 120px;">贸易方式</th>
+                  <!--                <th style="width: 80px;">运费</th>-->
+                  <th style="width: 100px;">中标数量</th>
+                  <th style="width: 120px;">报价品牌</th>
+                  <th style="width: 120px;">报价规格</th>
+                  <th style="width: 280px;" colspan="2">操作</th>
+                </tr>
               </thead>
               <tbody v-for="(item, index) in dataSource">
-              <tr v-for="(child,idx) in item.suppList">
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center"
+                <tr v-for="(child, idx) in item.suppList">
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center"
                     :rowspan="item.rowSpan" v-if="idx == '0'">
-                  {{ index + 1 }}
-                </td>
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD; padding: 10px;" :rowspan="item.rowSpan"
+                    {{ index + 1 }}
+                  </td>
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD; padding: 10px;" :rowspan="item.rowSpan"
                     v-if="idx == '0'">
-                  <div style="margin-bottom: 10px;">
-                    物料标识:<span style="color: #0000CC!important;text-decoration: underline;">{{ item.prodCode }}</span>
-                  </div>
-                  <div style="margin-bottom: 10px;">
-                    物料名称:{{ item.prodName }}
-                  </div>
-                  <div style="margin-bottom: 10px;" v-if="model.reqType == '0'">
-                    物料分类:{{ item.categoryName }}
-                  </div>
-                  <div style="margin-bottom: 10px;" v-if="model.reqType == '0'">
-                    规格型号:{{ item.speType }}
-                  </div>
-                </td>
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center"
+                    <div style="margin-bottom: 10px;">
+                      物料标识:<span style="color: #0000CC!important;text-decoration: underline;">{{ item.prodCode }}</span>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                      物料名称:{{ item.prodName }}
+                    </div>
+                    <div style="margin-bottom: 10px;" v-if="model.reqType == '0'">
+                      物料分类:{{ item.categoryName }}
+                    </div>
+                    <div style="margin-bottom: 10px;" v-if="model.reqType == '0'">
+                      规格型号:{{ item.speType }}
+                    </div>
+                  </td>
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center"
                     :rowspan="item.rowSpan" v-if="idx == '0'">
-                  {{ item.qty }}
-                </td>
-                <td
-                  style="background-color:#fafafa; border: 1px solid #DDDDDD;min-height: 40px;padding-top: 10px;padding-bottom: 10px;text-align: center">
-                  {{ child.name }}
-                </td>
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
-                  {{ child.currencyName }}
-                </td>
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
-                  <span v-if="child.taxRate != '100'">
-                    {{ child.taxRate }} %
-                  </span>
-                  <span v-else-if="child.taxRate == '100'">
-                    其他
-                  </span>
-                  <span v-else>-</span>
-                </td>
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: right">
-                  <span v-if="child.orderPriceTax != null && child.orderPriceTax != '' && child.orderPriceTax != undefined">
-                     <span v-if="child.currency == 'RMB'">
-                      ¥
+                    {{ item.qty }}
+                  </td>
+                  <td
+                    style="background-color:#fafafa; border: 1px solid #DDDDDD;min-height: 40px;padding-top: 10px;padding-bottom: 10px;text-align: center">
+                    {{ child.name }}
+                  </td>
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
+                    {{ child.currencyName }}
+                  </td>
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
+                    <span v-if="child.taxRate != '100'">
+                      {{ child.taxRate }} %
                     </span>
-                    <span v-if="child.currency == 'JPY'">
-                      Ұ
+                    <span v-else-if="child.taxRate == '100'">
+                      其他
                     </span>
-                    <span v-if="child.currency == 'USD'">
-                      $
+                    <span v-else>-</span>
+                  </td>
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: right">
+                    <span
+                      v-if="child.orderPriceTax != null && child.orderPriceTax != '' && child.orderPriceTax != undefined">
+                      <span v-if="child.currency == 'RMB'">
+                        ¥
+                      </span>
+                      <span v-if="child.currency == 'JPY'">
+                        Ұ
+                      </span>
+                      <span v-if="child.currency == 'USD'">
+                        $
+                      </span>
+                      <span v-if="child.currency == 'EUR'">
+                        €
+                      </span>
                     </span>
-                    <span v-if="child.currency == 'EUR'">
-                      €
+                    {{ child.orderPriceTax }}
+                  </td>
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: right">
+                    <span
+                      v-if="child.bgOrderPriceTax != null && child.bgOrderPriceTax != '' && child.bgOrderPriceTax != undefined">
+                      <span v-if="child.currency == 'RMB'">
+                        ¥
+                      </span>
+                      <span v-if="child.currency == 'JPY'">
+                        Ұ
+                      </span>
+                      <span v-if="child.currency == 'USD'">
+                        $
+                      </span>
+                      <span v-if="child.currency == 'EUR'">
+                        €
+                      </span>
                     </span>
-                  </span>
-                  {{ child.orderPriceTax }}
-                </td>
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: right">
-                  <span v-if="child.bgOrderPriceTax != null && child.bgOrderPriceTax != '' && child.bgOrderPriceTax != undefined">
-                    <span v-if="child.currency == 'RMB'">
-                      ¥
+                    {{ child.bgOrderPriceTax }}
+                    <span
+                      v-if="child.isRecommend == '1' && model.inquiryStatus == '2' && child.isContract != '1' && child.isBargin == '1'"
+                      style="color: red">
+                      (议价中)
                     </span>
-                    <span v-if="child.currency == 'JPY'">
-                      Ұ
+                    <span
+                      v-if="child.isRecommend == '1' && model.inquiryStatus == '2' && child.isContract != '1' && child.isBargin == '2'"
+                      style="color: red">
+                      (已回复)
                     </span>
-                    <span v-if="child.currency == 'USD'">
-                      $
-                    </span>
-                    <span v-if="child.currency == 'EUR'">
-                      €
-                    </span>
-                  </span>
-                  {{ child.bgOrderPriceTax }}
-                  <span v-if="child.isRecommend == '1' && model.inquiryStatus == '2' && child.isContract != '1' && child.isBargin == '1'" style="color: red">
-                    (议价中)
-                  </span>
-                  <span v-if="child.isRecommend == '1' && model.inquiryStatus == '2' && child.isContract != '1' && child.isBargin == '2'" style="color: red">
-                    (已回复)
-                  </span>
-                </td>
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center;padding: 5px;">
-                  {{ child.tradeTypeName }}
-                </td>
-                <!--                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">-->
-                <!--                  {{ child.fareAmount }}-->
-                <!--                </td>-->
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
-                  <span v-if="child.isRecommend != '1' || show"> {{ child.inquiryQty }} </span>
-                  <a-input-number v-else v-model="child.inquiryQty" style="width: 90%; text-align: center;"
-                                  :disabled="child.isRecommend != '1' || show" @change="setValue"></a-input-number>
-                </td>
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
-                  <a-input v-model="child.brandName" v-if="child.quoteId != null && child.quoteId != undefined" :disabled="show"></a-input>
-                </td>
-                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
-                  <a-input v-model="child.speType" v-if="child.quoteId != null && child.quoteId != undefined" :disabled="show"></a-input>
-                </td>
-                <td
-                  style="background-color:#fafafa; border: 1px solid #DDDDDD;width: 120px;text-align: left;padding-left: 10px;">
-                  <a-checkbox v-model="child.isRecommend" @change="clearRadio(item,child)" :disabled="show"
-                              style="color: #618dfa;">推荐
-                  </a-checkbox>
-                  <a style="margin-left: 10px" v-if="!show && (child.status == '1' || child.status == '3')"@click="goBargin(item,idx)">发起议价</a>
-                  <a style="margin-left: 10px" @click="handleHistory(item,child)">历史报价</a>
-                  <a style="margin-left: 10px" @click="handleChild(item,child)">配套产品</a>
-                  <a style="margin-left: 10px" @click="toEndBargin(item,child)"
-                     v-if="child.isRecommend == '1' && model.inquiryStatus == '2' && child.isContract != '1' && (child.isBargin == '0' || child.isBargin == '2')">再次议价</a>
-                </td>
-              </tr>
+                  </td>
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center;padding: 5px;">
+                    {{ child.tradeTypeName }}
+                  </td>
+                  <!--                <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">-->
+                  <!--                  {{ child.fareAmount }}-->
+                  <!--                </td>-->
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
+                    <span v-if="child.isRecommend != '1' || show"> {{ child.inquiryQty }} </span>
+                    <a-input-number v-else v-model="child.inquiryQty" style="width: 90%; text-align: center;"
+                      :disabled="child.isRecommend != '1' || show" @change="setValue"></a-input-number>
+                  </td>
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
+                    <a-input v-model="child.brandName" v-if="child.quoteId != null && child.quoteId != undefined"
+                      :disabled="show"></a-input>
+                  </td>
+                  <td style="background-color:#fafafa; border: 1px solid #DDDDDD;text-align: center">
+                    <a-input v-model="child.speType" v-if="child.quoteId != null && child.quoteId != undefined"
+                      :disabled="show"></a-input>
+                  </td>
+                  <td
+                    style="background-color:#fafafa; border: 1px solid #DDDDDD;width: 120px;text-align: left;padding-left: 10px;">
+                    <a-checkbox v-model="child.isRecommend" @change="clearRadio(item, child)" :disabled="show"
+                      style="color: #618dfa;">推荐
+                    </a-checkbox>
+                    <a style="margin-left: 10px" v-if="!show && (child.status == '1' || child.status == '3')"
+                      @click="goBargin(item, idx)">发起议价</a>
+                    <a style="margin-left: 10px" @click="handleHistory(item, child)">历史报价</a>
+                    <a style="margin-left: 10px" @click="handleChild(item, child)">配套产品</a>
+                    <a style="margin-left: 10px" @click="toEndBargin(item, child)"
+                      v-if="child.isRecommend == '1' && model.inquiryStatus == '2' && child.isContract != '1' && (child.isBargin == '0' || child.isBargin == '2')">再次议价</a>
+                  </td>
+                </tr>
               </tbody>
             </table>
 
@@ -239,7 +241,8 @@
             <a-row>
               <a-col :span="24">
                 <a-button type="primary" style="float: right;z-index: 999;margin-top: -55px;" size="small"
-                          @click="changeFileName(model.id,model.attachment,'attachment','attachment')" v-if="model.attachment != null && model.attachment != ''">修改文件名</a-button>
+                  @click="changeFileName(model.id, model.attachment, 'attachment', 'attachment')"
+                  v-if="model.attachment != null && model.attachment != ''">修改文件名</a-button>
                 <a-form-item label="附件" :labelCol="spans.labelCol1" :wrapperCol="spans.wrapperCol1">
                   <j-upload v-model="model.attachment" :trigger-change="true" :disabled="formDisabled"></j-upload>
                 </a-form-item>
@@ -312,7 +315,6 @@
     <quote-child-form ref="quoteForm"></quote-child-form>
     <change-file-name ref="cfn" @back="toSetUrl"></change-file-name>
   </a-drawer>
-
 </template>
 
 <script>
@@ -342,7 +344,7 @@ export default {
   },
   data() {
     return {
-      param:{},
+      param: {},
       confirmLoading: false,
       visible: false,
       show: false,
@@ -397,14 +399,14 @@ export default {
   created() {
   },
   methods: {
-    toEndBargin(item,child){
+    toEndBargin(item, child) {
       let record = JSON.parse(JSON.stringify(child))
       record.qty = item.qty
       record.prodName = item.prodName
       record.prodCode = item.prodCode
       record.categoryName = item.categoryName
       record.speType = item.speType
-      if(isNotNullOrEmpty(record.bgOrderPriceTax)){
+      if (isNotNullOrEmpty(record.bgOrderPriceTax)) {
         record.orderPriceTax = record.bgOrderPriceTax;
       }
       if (isNullOrEmpty(record.bgOrderPriceTax)) {
@@ -413,13 +415,13 @@ export default {
       record.bgFareAmount = record.fareAmount
       this.$refs.modalForm.edit(record)
     },
-    toSetUrl(url){
+    toSetUrl(url) {
       this.model[this.param.filed] = url;
     },
-    changeFileName(id,url,column,filed){
+    changeFileName(id, url, column, filed) {
       //判断文件列表是否为空
       let that = this;
-      if(isNullOrEmpty(url)){
+      if (isNullOrEmpty(url)) {
         that.$message.error("当前没有可修改的文件");
         return;
       }
@@ -427,8 +429,8 @@ export default {
       let urlList = [];
       urls.filter(item => {
         let url = {
-          oldUrl:item,
-          newUrl:'',
+          oldUrl: item,
+          newUrl: '',
         }
         urlList.push(url);
       })
@@ -482,9 +484,9 @@ export default {
       }
       this.$refs.modalAllForm.edit(dataList)
     },
-    handleChild(item,child){
+    handleChild(item, child) {
       let quoteId = child.quoteId;
-      this.$refs.quoteForm.edit({quoteId:quoteId});
+      this.$refs.quoteForm.edit({ quoteId: quoteId });
     },
     goBargin(item, index) {
       let record = JSON.parse(JSON.stringify(item.suppList[index]))
@@ -624,7 +626,7 @@ export default {
       //   this.$forceUpdate();
       // })
     },
-    edit(record) {
+    edit(record,num) {
       this.show = false
       if (record.inquiryStatus == '2' || record.inquiryStatus == '3' || record.inquiryStatus == '4') {
         this.show = true
@@ -633,6 +635,9 @@ export default {
       this.visible = true
       this.model = Object.assign({}, record)
       if (this.model.id) {
+        if(num == 1){
+          this.getDetailList(this.model.inquiryId)
+        }
         this.getDetailList(this.model.id)
       }
     },
@@ -673,7 +678,6 @@ export default {
   border: 1px solid #DDDDDD;
   text-align: center;
 }
-
 </style>
 <style lang="less" scoped>
 .ant-row.ant-form-item {
