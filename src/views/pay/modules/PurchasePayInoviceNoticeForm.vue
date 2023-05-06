@@ -13,7 +13,7 @@
           <a-col :span="8">
             <a-form-model-item label="币种" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3"
                                prop="currency">
-              <j-dict-select-tag placeholder="请选择币种" v-model="model.currency" dictCode="currency_type" disabled/>
+              <j-dict-select-tag placeholder="请选择币种" v-model="model.currency" dictCode="currency_type" />
             </a-form-model-item>
           </a-col>
           <a-col :span="8">
@@ -65,7 +65,7 @@
           <a-divider orientation="left" style="color: #00A0E9">
             开票明细
           </a-divider>
-<!--          <a-button type='danger' @click='openDrawer' icon='plus' style='float: right;z-index: 999'>选择合同设备</a-button>-->
+ <a-button type='primary' @click='openDrawer' icon='plus' style='float: right;z-index: 999'>选择入库记录</a-button>
           <a-table
             style="margin-top: -40px"
             ref="table"
@@ -96,6 +96,7 @@
           </a-col>
         </a-row>
       </a-form-model>
+      <delivery-object-modal ref='modal' :contractId='model.contractId' @ok='back' ptype='invoice'></delivery-object-modal>
     </j-form-container>
   </a-spin>
 </template>
@@ -109,6 +110,7 @@ import { billModalMixin } from '../../mixins/billModalMixin'
 import { JeecgListMixin } from '@/mixins/JeecgListMixin'
 import JSelectContract from '@comp/jeecgbiz/JSelectContract'
 import { isNullOrEmpty, preciseNum } from '@/utils/util'
+import DeliveryObjectModal from '@views/pay/modules/DeliveryObjectModal'
 import {
   iegAmount
 } from '@/utils/util'
@@ -116,7 +118,7 @@ import {
 export default {
   name: 'PurchasePayInoviceNoticeForm',
   mixins: [JeecgListMixin, billListMixin, billModalMixin],
-  components: {JEllipsis,JSelectContract},
+  components: {JEllipsis,JSelectContract,DeliveryObjectModal},
   props: {
     //表单禁用
     disabled: {
@@ -392,11 +394,11 @@ export default {
       this.$forceUpdate();
     },
     openDrawer(){
-      let contractId = this.model.contractId;
-      if(isNullOrEmpty(contractId)){
-        this.$message.error("请选择合同");
-        return;
-      }
+      // let contractId = this.model.contractId;
+      // if(isNullOrEmpty(contractId)){
+      //   this.$message.error("请选择合同");
+      //   return;
+      // }
       this.$refs.modal.loadData();
     },
     backUser(ids,rows){

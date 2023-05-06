@@ -175,7 +175,7 @@
             <a-table
               ref="table"
               size="middle"
-              :scroll="{x:true,y:500}"
+              :scroll="{x:1800,y:500}"
               bordered
               :customRow="customRow"
               rowKey="id"

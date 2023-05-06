@@ -226,13 +226,13 @@
             width:150,
             scopedSlots: { customRender: 'deviceName' }
           },
-          {
-            title:'设备序号',
-            align:"center",
-            dataIndex: 'deviceSerialNumber',
-            width:150,
-            scopedSlots: { customRender: 'deviceSerialNumber' }
-          },
+          // {
+          //   title:'设备序号',
+          //   align:"center",
+          //   dataIndex: 'deviceSerialNumber',
+          //   width:150,
+          //   scopedSlots: { customRender: 'deviceSerialNumber' }
+          // },
           {
             title:'数量',
             align:"center",
