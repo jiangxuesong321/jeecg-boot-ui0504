@@ -148,7 +148,10 @@
             :columns="columns1"
             :dataSource="dataSource"
             :pagination="false">
-
+            <template slot="buyerId" slot-scope="text,record">
+              <j-dict-select-tag placeholder="请选择采购员" v-model="record.buyerId" dictCode="sys_user,realname,username,status = '1'"
+                                 :getPopupContainer='getPopupContainer' :disabled="ptype == 'hasdo'"/>
+            </template>
             <template slot="unitId" slot-scope="text,record">
               <j-dict-select-tag placeholder="请选择单位名称" v-model="record.unitId" dictCode="unit" :disabled="formDisabled" :getPopupContainer="getParentContainer"/>
             </template>
@@ -430,6 +433,13 @@ export default {
             width:180,
             align:"center",
             scopedSlots: { customRender: 'orgId' },
+          },
+          {
+            title: '采购员',
+            dataIndex: 'buyerId',
+            width:120,
+            align:"center",
+            scopedSlots: { customRender: 'buyerId' },
           },
           {
             title: '操作',

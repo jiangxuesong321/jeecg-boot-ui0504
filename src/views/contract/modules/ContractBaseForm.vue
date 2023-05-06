@@ -1320,6 +1320,8 @@ export default {
             }
 
             that.model.contractObjectList = dataSource;
+
+            that.model.contractType = '0';
             let dataSource2 = that.dataSource2;
             if(dataSource2 != null && dataSource2.length > 0){
               // for(let i = 0; i < dataSource2.length; i++){

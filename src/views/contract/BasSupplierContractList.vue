@@ -389,14 +389,14 @@
       dataIndex: 'qtyNum',
       width:120,
     },
-    {
-      title:'品牌',
-      align:"center",
-      sorter: true,
-      dataIndex: 'brandName',
-      width:160,
-      scopedSlots: { customRender: 'brandName' }
-    },
+    // {
+    //   title:'品牌',
+    //   align:"center",
+    //   sorter: true,
+    //   dataIndex: 'brandName',
+    //   width:160,
+    //   scopedSlots: { customRender: 'brandName' }
+    // },
     {
       title:'供应商名称',
       align:"center",
@@ -405,13 +405,13 @@
       width:160,
       scopedSlots: { customRender: 'contractSecondParty' }
     },
-    {
-      title:'询报价编号',
-      align:"center",
-      dataIndex: 'inquiryCode',
-      sorter: true,
-      width:150,
-    },
+    // {
+    //   title:'询报价编号',
+    //   align:"center",
+    //   dataIndex: 'inquiryCode',
+    //   sorter: true,
+    //   width:150,
+    // },
     // {
     //   title:'项目标题',
     //   align:"center",
@@ -482,80 +482,80 @@
       width:120,
       scopedSlots: { customRender: 'contractStatus_dictText' }
     },
-    {
-      title:'已付总金额(原币)',
-      dataIndex: 'payAmountOther',
-      sorter: true,
-      width:120,
-      customRender:function (t,r,index) {
-        let icon = "";
-        if(r.contractCurrency == 'RMB'){
-          icon = '¥';
-        }else if(r.contractCurrency == 'JPY'){
-          icon = 'Ұ';
-        }else if(r.contractCurrency == 'USD'){
-          icon = '$';
-        }else if(r.contractCurrency == 'EUR'){
-          icon = '€';
-        }
-        // return icon + iegAmount(t,'total')
-        const obj = {
-          children: icon + iegAmount(Math.trunc(t),'total'),
-          attrs: {},
-        };
-        obj.attrs.align = 'right';//控制表体内容居右
-        return obj;
-      }
-    },
-    {
-      title:'已付总金额(本币)',
-      dataIndex: 'payAmount',
-      sorter: true,
-      width:120,
-      customRender:function (t,r,index) {
-        let icon = "";
-        icon = '¥';
-        // return icon + iegAmount(t,'total')
-        const obj = {
-          children: icon + iegAmount(Math.trunc(t),'total'),
-          attrs: {},
-        };
-        obj.attrs.align = 'right';//控制表体内容居右
-        return obj;
-      }
-    },
-    {
-      title:'已开发票',
-      dataIndex: 'invoiceAmount',
-      sorter: true,
-      width:120,
-      customRender:function (t,r,index) {
-        let icon = "";
-        if(r.contractCurrency == 'RMB'){
-          icon = '¥';
-        }else if(r.contractCurrency == 'JPY'){
-          icon = 'Ұ';
-        }else if(r.contractCurrency == 'USD'){
-          icon = '$';
-        }else if(r.contractCurrency == 'EUR'){
-          icon = '€';
-        }
-        // return icon + iegAmount(t,'total')
-        const obj = {
-          children: icon + iegAmount(Math.trunc(t),'total'),
-          attrs: {},
-        };
-        obj.attrs.align = 'right';//控制表体内容居右
-        return obj;
-      }
-    },
-    {
-      title:'生效时间',
-      align:"center",
-      sorter: true,
-      dataIndex: 'contractValidDate',
-      width:120,
-    },
+    // {
+    //   title:'已付总金额(原币)',
+    //   dataIndex: 'payAmountOther',
+    //   sorter: true,
+    //   width:120,
+    //   customRender:function (t,r,index) {
+    //     let icon = "";
+    //     if(r.contractCurrency == 'RMB'){
+    //       icon = '¥';
+    //     }else if(r.contractCurrency == 'JPY'){
+    //       icon = 'Ұ';
+    //     }else if(r.contractCurrency == 'USD'){
+    //       icon = '$';
+    //     }else if(r.contractCurrency == 'EUR'){
+    //       icon = '€';
+    //     }
+    //     // return icon + iegAmount(t,'total')
+    //     const obj = {
+    //       children: icon + iegAmount(Math.trunc(t),'total'),
+    //       attrs: {},
+    //     };
+    //     obj.attrs.align = 'right';//控制表体内容居右
+    //     return obj;
+    //   }
+    // },
+    // {
+    //   title:'已付总金额(本币)',
+    //   dataIndex: 'payAmount',
+    //   sorter: true,
+    //   width:120,
+    //   customRender:function (t,r,index) {
+    //     let icon = "";
+    //     icon = '¥';
+    //     // return icon + iegAmount(t,'total')
+    //     const obj = {
+    //       children: icon + iegAmount(Math.trunc(t),'total'),
+    //       attrs: {},
+    //     };
+    //     obj.attrs.align = 'right';//控制表体内容居右
+    //     return obj;
+    //   }
+    // },
+    // {
+    //   title:'已开发票',
+    //   dataIndex: 'invoiceAmount',
+    //   sorter: true,
+    //   width:120,
+    //   customRender:function (t,r,index) {
+    //     let icon = "";
+    //     if(r.contractCurrency == 'RMB'){
+    //       icon = '¥';
+    //     }else if(r.contractCurrency == 'JPY'){
+    //       icon = 'Ұ';
+    //     }else if(r.contractCurrency == 'USD'){
+    //       icon = '$';
+    //     }else if(r.contractCurrency == 'EUR'){
+    //       icon = '€';
+    //     }
+    //     // return icon + iegAmount(t,'total')
+    //     const obj = {
+    //       children: icon + iegAmount(Math.trunc(t),'total'),
+    //       attrs: {},
+    //     };
+    //     obj.attrs.align = 'right';//控制表体内容居右
+    //     return obj;
+    //   }
+    // },
+    // {
+    //   title:'生效时间',
+    //   align:"center",
+    //   sorter: true,
+    //   dataIndex: 'contractValidDate',
+    //   width:120,
+    // },
     {
       title: '操作',
       dataIndex: 'action',
@@ -683,14 +683,14 @@
           //   dataIndex: 'contractName',
           //   width:160,
           // },
-          {
-            title:'项目名称',
-            align:"center",
-            sorter: true,
-            dataIndex: 'projName',
-            width:160,
-            scopedSlots: { customRender: 'projName' }
-          },
+          // {
+          //   title:'项目名称',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'projName',
+          //   width:160,
+          //   scopedSlots: { customRender: 'projName' }
+          // },
           {
             title:'标的名称',
             align:"center",
@@ -707,13 +707,13 @@
             width:160,
             scopedSlots: { customRender: 'contractSecondParty' }
           },
-          {
-            title:'招投标编号',
-            align:"center",
-            sorter: true,
-            dataIndex: 'biddingNo',
-            width:150,
-          },
+          // {
+          //   title:'招投标编号',
+          //   align:"center",
+          //   sorter: true,
+          //   dataIndex: 'biddingNo',
+          //   width:150,
+          // },
 
           // {
           //   title:'合同类型',
@@ -778,80 +778,80 @@
             width:120,
             scopedSlots: { customRender: 'contractStatus_dictText' }
           },
-          {
-            title:'已付总金额(原币)',
-            dataIndex: 'payAmountOther',
-            sorter: true,
-            width:120,
-            customRender:function (t,r,index) {
-              let icon = "";
-              if(r.contractCurrency == 'RMB'){
-                icon = '¥';
-              }else if(r.contractCurrency == 'JPY'){
-                icon = 'Ұ';
-              }else if(r.contractCurrency == 'USD'){
-                icon = '$';
-              }else if(r.contractCurrency == 'EUR'){
-                icon = '€';
-              }
-              // return icon + iegAmount(t,'total')
-              const obj = {
-                children: icon + iegAmount(Math.trunc(t),'total'),
-                attrs: {},
-              };
-              obj.attrs.align = 'right';//控制表体内容居右
-              return obj;
-            }
-          },
-          {
-            title:'已付总金额(本币)',
-            dataIndex: 'payAmount',
-            sorter: true,
-            width:120,
-            customRender:function (t,r,index) {
-              let icon = "";
-              icon = '¥';
-              // return icon + iegAmount(t,'total')
-              const obj = {
-                children: icon + iegAmount(Math.trunc(t),'total'),
-                attrs: {},
-              };
-              obj.attrs.align = 'right';//控制表体内容居右
-              return obj;
-            }
-          },
-          {
-            title:'已开发票',
-            dataIndex: 'invoiceAmount',
-            sorter: true,
-            width:120,
-            customRender:function (t,r,index) {
-              let icon = "";
-              if(r.contractCurrency == 'RMB'){
-                icon = '¥';
-              }else if(r.contractCurrency == 'JPY'){
-                icon = 'Ұ';
-              }else if(r.contractCurrency == 'USD'){
-                icon = '$';
-              }else if(r.contractCurrency == 'EUR'){
-                icon = '€';
-              }
-              // return icon + iegAmount(t,'total')
-              const obj = {
-                children: icon + iegAmount(Math.trunc(t),'total'),
-                attrs: {},
-              };
-              obj.attrs.align = 'right';//控制表体内容居右
-              return obj;
-            }
-          },
-          {
-            title:'生效时间',
-            align:"center",
-            dataIndex: 'contractValidDate',
-            sorter: true,
-            width:120,
-          },
+          // {
+          //   title:'已付总金额(原币)',
+          //   dataIndex: 'payAmountOther',
+          //   sorter: true,
+          //   width:120,
+          //   customRender:function (t,r,index) {
+          //     let icon = "";
+          //     if(r.contractCurrency == 'RMB'){
+          //       icon = '¥';
+          //     }else if(r.contractCurrency == 'JPY'){
+          //       icon = 'Ұ';
+          //     }else if(r.contractCurrency == 'USD'){
+          //       icon = '$';
+          //     }else if(r.contractCurrency == 'EUR'){
+          //       icon = '€';
+          //     }
+          //     // return icon + iegAmount(t,'total')
+          //     const obj = {
+          //       children: icon + iegAmount(Math.trunc(t),'total'),
+          //       attrs: {},
+          //     };
+          //     obj.attrs.align = 'right';//控制表体内容居右
+          //     return obj;
+          //   }
+          // },
+          // {
+          //   title:'已付总金额(本币)',
+          //   dataIndex: 'payAmount',
+          //   sorter: true,
+          //   width:120,
+          //   customRender:function (t,r,index) {
+          //     let icon = "";
+          //     icon = '¥';
+          //     // return icon + iegAmount(t,'total')
+          //     const obj = {
+          //       children: icon + iegAmount(Math.trunc(t),'total'),
+          //       attrs: {},
+          //     };
+          //     obj.attrs.align = 'right';//控制表体内容居右
+          //     return obj;
+          //   }
+          // },
+          // {
+          //   title:'已开发票',
+          //   dataIndex: 'invoiceAmount',
+          //   sorter: true,
+          //   width:120,
+          //   customRender:function (t,r,index) {
+          //     let icon = "";
+          //     if(r.contractCurrency == 'RMB'){
+          //       icon = '¥';
+          //     }else if(r.contractCurrency == 'JPY'){
+          //       icon = 'Ұ';
+          //     }else if(r.contractCurrency == 'USD'){
+          //       icon = '$';
+          //     }else if(r.contractCurrency == 'EUR'){
+          //       icon = '€';
+          //     }
+          //     // return icon + iegAmount(t,'total')
+          //     const obj = {
+          //       children: icon + iegAmount(Math.trunc(t),'total'),
+          //       attrs: {},
+          //     };
+          //     obj.attrs.align = 'right';//控制表体内容居右
+          //     return obj;
+          //   }
+          // },
+          // {
+          //   title:'生效时间',
+          //   align:"center",
+          //   dataIndex: 'contractValidDate',
+          //   sorter: true,
+          //   width:120,
+          // },
           {
             title: '操作',
             dataIndex: 'action',

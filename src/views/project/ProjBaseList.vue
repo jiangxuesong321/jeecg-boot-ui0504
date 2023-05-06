@@ -120,8 +120,8 @@
           <a-divider type="vertical" v-if="record.isDisabled == '1'"/>
 					<a @click="handleDetail(record)">详情</a>
 
-          <a-divider type="vertical" v-has="'proj:neck'"/>
-					<a @click="handleNeck(record)" v-has="'proj:neck'">Neck产能维护</a>
+<!--          <a-divider type="vertical" v-has="'proj:neck'"/>-->
+<!--					<a @click="handleNeck(record)" v-has="'proj:neck'">Neck产能维护</a>-->
           <a-divider type="vertical" v-has="'proj:mangeSubkeyPerson'"/>
           <a @click="handleSubkey(record)" v-has="'proj:mangeSubkeyPerson'">配置子项产线人员</a>
 

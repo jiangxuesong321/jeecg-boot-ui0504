@@ -220,14 +220,14 @@ let columns = [
     width: 180,
     scopedSlots: { customRender: 'biddingName' }
   },
-  {
-    title: '项目名称',
-    align: 'center',
-    sorter: true,
-    dataIndex: 'projName',
-    width: 180,
-    scopedSlots: { customRender: 'projName' }
-  },
+  // {
+  //   title: '项目名称',
+  //   align: 'center',
+  //   sorter: true,
+  //   dataIndex: 'projName',
+  //   width: 180,
+  //   scopedSlots: { customRender: 'projName' }
+  // },
   {
     title: '招标类型',
     align: 'center',

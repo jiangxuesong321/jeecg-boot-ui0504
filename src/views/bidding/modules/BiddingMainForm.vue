@@ -104,14 +104,14 @@
                   </a-form-model-item>
                 </a-col>
 
-                <a-col :span="8">
-                  <a-form-model-item label="盲标" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3" prop="isMangbiao">
-                    <a-radio-group v-model="model.isMangbiao" name="isMangbiao" :disabled="formDisabled" @change="setVal">
-                      <a-radio value="1">是</a-radio>
-                      <a-radio value="0">否</a-radio>
-                    </a-radio-group>
-                  </a-form-model-item>
-                </a-col>
+<!--                <a-col :span="8">-->
+<!--                  <a-form-model-item label="盲标" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3" prop="isMangbiao">-->
+<!--                    <a-radio-group v-model="model.isMangbiao" name="isMangbiao" :disabled="formDisabled" @change="setVal">-->
+<!--                      <a-radio value="1">是</a-radio>-->
+<!--                      <a-radio value="0">否</a-radio>-->
+<!--                    </a-radio-group>-->
+<!--                  </a-form-model-item>-->
+<!--                </a-col>-->
               </a-row>
             </a-card>
             <a-card class="card" title="招标明细" :bordered="false" style="margin-top: 15px;">

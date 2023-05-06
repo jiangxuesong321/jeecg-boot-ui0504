@@ -163,13 +163,13 @@
               </a-table>
             </a-card>
           </a-tab-pane>
-          <a-tab-pane key="1" tab="费用分类" v-if="(ptype == 'edit' && tabKey == '1') || ptype != 'edit'">
+          <a-tab-pane key="1" tab="项目子项设定" v-if="(ptype == 'edit' && tabKey == '1') || ptype != 'edit'">
             <div style="margin-top: 10px">
               <a-row>
                 <a-col :span="6">
                   <div style="margin-bottom: 10px;">
                     <a-button @click="addCategory" type="primary" style="margin-right: 10px" :disabled="formDisabled">
-                      添加费用分类
+                      添加子项设定
                     </a-button>
                     <a-button @click="addChildCategory" type="primary"
                               v-if="selectedKeys != null && selectedKeys.length > 0" :disabled="formDisabled">添加下级分类
@@ -708,7 +708,7 @@ export default {
           width: 200
         },
         {
-          title: '设备产能(万片/月)',
+          title: '设备产能',
           dataIndex: 'capacity',
           width: 160,
           align: 'center',
