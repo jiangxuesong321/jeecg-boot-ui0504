@@ -56,7 +56,7 @@ export default {
           }
         },
         {
-          title:'配套产品',
+          title:'物料',
           align:"center",
           dataIndex: 'prodName',
           width: 180,
@@ -102,7 +102,7 @@ export default {
       confirmLoading:false,
       visible:false,
       show:false,
-      title:'配套产品',
+      title:'物料',
       width:'80%',
       dataSource:[],
       labelCol: {
