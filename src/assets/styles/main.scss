@@ -82,6 +82,7 @@ html{
 .ant-card-body {
     padding: 10px 20px;
 }
+
 .ant-table-thead tr th {
   color: #333 !important;
   background: #F6F6F6 !important;
@@ -1315,6 +1316,13 @@ body{
 	color: #1A1A1A;
 	line-height: 34px;
 }
+.right-content .cont-data1{
+	font-size: 16px;
+	font-family: Roboto-Bold, Roboto;
+	// font-weight: bold;
+	color: #1A1A1A;
+	line-height: 34px;
+}
 .card-main-index{
 	height: 135px;
 	padding-top: 1.2rem;
@@ -1440,6 +1448,132 @@ body{
   opacity: 0.5;
   vertical-align: top;
   margin-left: 1rem;
+}
+.card-main-index{
+	height: 135px;
+	padding-top: 1.2rem;
+}
+.card-main-index1 .pink-money::before{
+	content: "￥";
+	width: 56px;
+    height: 56px;
+    line-height: 56px;
+    display: inline-block;
+    border-radius: 30px;
+    text-align: center;
+    margin-right: 15px;
+	color: #FFF;
+	background-color: #8A38F5;
+	font-weight: bold;
+	font-size: 25px;
+	opacity: 0.5;
+	vertical-align: top;
+	margin-left: 7rem;
+}
+.card-main-index1 .blue-money::before{
+	content: "￥";
+	width: 56px;
+    height: 56px;
+    line-height: 56px;
+    display: inline-block;
+    border-radius: 30px;
+    text-align: center;
+    margin-right: 15px;
+	color: #FFF;
+	background-color: #3662EC;
+	font-weight: bold;
+	font-size: 25px;
+	opacity: 0.5;
+	vertical-align: top;
+	margin-left: 7rem;
+}
+.card-main-index1 .green-money::before{
+	content: "￥";
+	width: 56px;
+    height: 56px;
+    line-height: 56px;
+	display: inline-block;
+	border-radius: 30px;
+	text-align: center;
+	margin-right: 15px;
+	color: #FFF;
+	background-color: #00B578;
+	font-weight: bold;
+	font-size: 25px;
+	opacity: 0.5;
+	vertical-align: top;
+	margin-left: 7rem;
+}
+.card-main-index1 .orange-money::before{
+	content: "￥";
+    width: 56px;
+    height: 56px;
+    line-height: 56px;
+    display: inline-block;
+    border-radius: 30px;
+    text-align: center;
+    margin-right: 15px;
+    color: #FFF;
+    background-color: #FF8F1F;
+    font-weight: bold;
+    font-size: 25px;
+    opacity: 0.5;
+    vertical-align: top;
+    margin-left: 7rem;
+}
+
+.card-main-index1 .yellow-number::before{
+  content: "";
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  display: inline-block;
+  border-radius: 30px;
+  text-align: center;
+  margin-right: 15px;
+  //color: #FFF;
+  background-color: #FFCC33;
+  font-weight: bold;
+  font-size: 25px;
+  opacity: 0.5;
+  vertical-align: top;
+  margin-left: 7rem;
+}
+
+.card-main-index1 .blue-number::before{
+  content: "";
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  display: inline-block;
+  border-radius: 30px;
+  text-align: center;
+  margin-right: 15px;
+  //color: #FFF;
+  background-color: #00FFFF;
+  font-weight: bold;
+  font-size: 25px;
+  opacity: 0.5;
+  vertical-align: top;
+  margin-left: 7rem;
+}
+
+.card-main-index1 .green-number::before{
+  content: "";
+  width: 56px;
+  height: 56px;
+  line-height: 56px;
+  display: inline-block;
+  border-radius: 30px;
+  text-align: center;
+  margin-right: 15px;
+  //color: #FFF;
+  background-color: #66FF99;
+  font-weight: bold;
+  font-size: 25px;
+  opacity: 0.5;
+  vertical-align: top;
+  margin-left: 7rem;
 }
 .form-col-list{
 				padding-right: 0px;

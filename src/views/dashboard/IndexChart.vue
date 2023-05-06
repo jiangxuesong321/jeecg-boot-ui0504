@@ -1,142 +1,166 @@
 <template>
   <div class="page-header-index-wide">
+    <!-- <a-row>
+      <j-dict-select-tag v-model="queryParam.projId" placeholder="请选择项目" :allowClear="allowClear"
+        style="width: 220px;    position: absolute;    top: -65px;-index: 99999999; right: 10px;float: right;    margin-right: 10px;"
+        dictCode="proj_base,proj_name,id,del_flag = '0' order by create_time desc" @change="searchQuery" />
+    </a-row> -->
+    <!-- <a-row v-if="queryParam.projId != null && queryParam.projId != '' && queryParam.projId != undefined"> -->
     <a-row>
-      <j-dict-select-tag v-model="queryParam.projId"
-                         placeholder="请选择项目"
-                         :allowClear="allowClear"
-                         style="width: 220px;    position: absolute;    top: -65px;-index: 99999999; right: 10px;float: right;    margin-right: 10px;"
-                         dictCode="proj_base,proj_name,id,del_flag = '0' order by create_time desc"
-                         @change="searchQuery" />
-    </a-row>
-    <a-row v-if="queryParam.projId != null && queryParam.projId != '' && queryParam.projId != undefined">
       <div class="card-title" style="margin-left: 13px">
-        {{queryParam.projName}}
-<!--        <marquee scrollamount=15> <FONT color=#f4a460 size=4>{{queryParam.projName}}</FONT></marquee>-->
+        洛钼旗下产业招标采购公告专区
+        <!--        <marquee scrollamount=15> <FONT color=#f4a460 size=4>{{queryParam.projName}}</FONT></marquee>-->
       </div>
     </a-row>
     <a-row :gutter="24">
-
       <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
-        <a-card class="card-main-index ">
+        <a-card class="card-main-index1 ">
           <div class="right-content orange-money">
             <div style="display: inline-block;">
               <div class="card-title-font">
-                <a @click="jumpProj">项目总投</a>
+                <!-- <a @click="jumpProj">大宗物资</a> -->
+                <div class="card-title-font">大宗物资</div>
               </div>
-              <div class="cont-data">
-                <a @click="openBudgetAmount">{{ iegAmount(Math.trunc(model.budgetAmount), 'total') }}</a>
+              <div class="cont-data1">
+                <!-- <a @click="openBudgetAmount">{{ iegAmount(Math.trunc(model.budgetAmount), 'total') }}条>></a> -->
+                <a @click="openBudgetAmount">100条 >></a>
               </div>
             </div>
           </div>
         </a-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
-        <a-card class="card-main-index ">
+        <a-card class="card-main-index1 ">
           <div class="right-content green-money">
             <div style="display: inline-block;">
               <div class="card-title-font">
-                <a @click="jumpContract">合同总额</a>
+                <!-- <a @click="jumpContract">项目物资</a> -->
+                <div class="card-title-font">项目物资</div>
               </div>
-              <div class="cont-data">
-                <a @click="openContractAmount">{{ iegAmount(Math.trunc(model.contractAmountTaxLocal),'total') }}</a>
+              <div class="cont-data1">
+                <!-- <a @click="openContractAmount">{{ iegAmount(Math.trunc(model.contractAmountTaxLocal), 'total') }}条 >></a> -->
+                <a @click="openContractAmount">201条 >></a>
               </div>
             </div>
           </div>
         </a-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
-        <a-card class="card-main-index ">
+        <a-card class="card-main-index1 ">
           <div class="right-content pink-money">
             <div style="display: inline-block;">
               <div class="card-title-font">
-                <a @click="jumpPlan">支出总额</a>
+                <!-- <a @click="jumpPlan">服务</a> -->
+                <div class="card-title-font">服务</div>
               </div>
-              <div class="cont-data">
-                <a @click="openPayAmount">{{ iegAmount(Math.trunc(model.payAmount),'total') }}</a>
+              <div class="cont-data1">
+                <a @click="openPayAmount">{{ iegAmount(Math.trunc(model.payAmount), 'total') }}条 >></a>
               </div>
             </div>
           </div>
         </a-card>
       </a-col>
+
     </a-row>
     <a-row :gutter="24">
 
       <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
-        <a-card class="card-main-index ">
-          <img src="~@/assets/img_1.png" style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 31px;margin-top: 13px">
+        <a-card class="card-main-index1 ">
+          <img src="~@/assets/img_1.png"
+            style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content yellow-number">
             <div style="display: inline-block;">
-              <div class="card-title-font">项目类型</div>
-              <div class="cont-data" >
-                <a @click="openProjType">{{ iegAmount(Math.trunc(model.projTypeNum), 'total') }}</a>
+              <div class="card-title-font">智造</div>
+              <div class="cont-data1">
+                <a @click="openProjType">{{ iegAmount(Math.trunc(model.projTypeNum), 'total') }}条 >></a>
               </div>
             </div>
           </div>
         </a-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
-        <a-card class="card-main-index ">
-          <img src="~@/assets/img_2.png" style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 31px;margin-top: 13px">
+        <a-card class="card-main-index1 ">
+          <img src="~@/assets/img_2.png"
+            style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content blue-number">
             <div style="display: inline-block;">
-              <div class="card-title-font">地区</div>
-              <div class="cont-data">
-                <a @click="openProjArea">{{ iegAmount(Math.trunc(model.projAreaNum),'total') }}</a>
+              <div class="card-title-font">物流</div>
+              <div class="cont-data1">
+                <a @click="openProjArea">{{ iegAmount(Math.trunc(model.projAreaNum), 'total') }}条 >></a>
               </div>
             </div>
           </div>
         </a-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
-        <a-card class="card-main-index ">
-          <img src="~@/assets/img_3.png" style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 31px;margin-top: 13px">
+        <a-card class="card-main-index1 ">
+          <img src="~@/assets/img_3.png"
+            style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content green-number">
             <div style="display: inline-block;">
-              <div class="card-title-font">项目数量</div>
-              <div class="cont-data">{{ iegAmount(Math.trunc(model.projNum),'total') }}</div>
+              <div class="card-title-font">产业互联网</div>
+              <div class="cont-data1">
+                <a @click="openProjArea">{{ iegAmount(Math.trunc(model.projNum), 'total') }}条 >></a>
+              </div>
             </div>
           </div>
         </a-card>
       </a-col>
+
     </a-row>
     <a-row :gutter="24">
-      <a-col :span="24">
-        <a-card>
-          <img src="~@/assets/img.png" style="margin-left: 13%; width: 60%;">
-        </a-card>
-      </a-col>
-    </a-row>
-    <a-row :gutter="24" style="margin-top: 24px">
-
-      <a-col :sm="24" :md="12" :xl="24" :style="{ marginBottom: '24px' }">
+      <!-- <a-col :span="24" > -->
+   
+      <a-col :sm="24" :md="12" :xl="12" :style="{ marginBottom: '24px' }">
         <a-card style="max-height: 420px;padding-top: 1.2rem;">
-<!--          <div class="right-content">-->
-<!--            <div style="display: inline-block;">-->
-              <div class="card-title" style="margin-top: -30px">
-                项目清单
-              </div>
-              <a-table
-                style="clear:both;margin-top: -40px"
-                ref="table"
-                size="middle"
-                bordered
-                rowKey="id"
-                :scroll="{x:100,y:270}"
-                :columns="columns"
-                :dataSource="dataSource"
-                :pagination="ipagination"
-                :customRow="customRow"
-                @change="handleTableChange">
-              </a-table>
-<!--            </div>-->
-<!--          </div>-->
+          <!--          <div class="right-content">-->
+          <!--            <div style="display: inline-block;">-->
+          <!-- <div class="card-title" style="margin-top: -30px">
+            项目清单
+          </div>
+          <a-table style="clear:both;margin-top: -40px" ref="table" size="middle" bordered rowKey="id"
+            :scroll="{ x: 100, y: 270 }" :columns="columns" :dataSource="dataSource" :pagination="ipagination"
+            :customRow="customRow" @change="handleTableChange">
+          </a-table> -->
+          <!--            </div>-->
+          <!--          </div>-->
+          <a-tabs v-model:activeKey="activeKey" @change="handleChange">
+            <a-tab-pane key="0" tab="全部" ></a-tab-pane>
+            <a-tab-pane key="1" tab="工程"></a-tab-pane>
+            <a-tab-pane key="2" tab="服务"></a-tab-pane>
+            <a-tab-pane key="3" tab="货物"></a-tab-pane>
+            <a-tab-pane key="4" tab="其他"></a-tab-pane>
+          </a-tabs>
+          <a-tabs v-model:activeKey="activeKeyChild" @change="isZhaobiaoChange">
+            <a-tab-pane key="0" tab="招标采购公告"></a-tab-pane>
+            <a-tab-pane key="1" tab="非招标采购公告"></a-tab-pane>
+          </a-tabs>
+
+          <a-list itemLayout="horizontal" :dataSource="data">
+            <a-list-item>
+              <a-list-item-meta>
+                <a slot="title">[公开招标]</a>
+                <a slot="title">
+                  复星蜂巢工程项目类招标公告</a>
+              </a-list-item-meta>
+              <template>
+                <div>2023-5-6</div>
+              </template>
+            </a-list-item>
+          </a-list>
+
+        </a-card>
+      </a-col>
+      <a-col :sm="24" :md="12" :xl="12">
+        <a-card>
+          <img src="~@/assets/img.png" style=" width: 100%;">
         </a-card>
       </a-col>
     </a-row>
-
     <a-row :gutter="24" v-if="queryParam.projId != null && queryParam.projId != '' && queryParam.projId != undefined">
       <a-col :span="12">
-        <a-card style="padding: 10px 20px 10px 20px;height: 288px" :loading="loading" :bordered="false" :body-style="{padding: '0'}">
+        <a-card style="padding: 10px 20px 10px 20px;height: 288px" :loading="loading" :bordered="false"
+          :body-style="{ padding: '0' }">
           <a-row>
             <a-col :span="16">
               <div class="card-title">
@@ -154,8 +178,8 @@
               <!--                                 style="width: 220px; float: right;margin-right: 10px; margin-top: 10px;"-->
               <!--                                 dictCode="model"-->
               <!--                                 @change="searchQuery" />-->
-              <a-select  v-model="queryParam.model"
-                         placeholder="请选择项目子项" :allowClear="allowClear"  style="width: 220px; float: right;margin-right: 10px; margin-top: 10px;" @change="fetchModel">
+              <a-select v-model="queryParam.model" placeholder="请选择项目子项" :allowClear="allowClear"
+                style="width: 220px; float: right;margin-right: 10px; margin-top: 10px;" @change="fetchModel">
                 <a-select-option v-for="(item, key) in dictOptions" :key="item.value" :value="item.value">
                   {{ item.text || item.label }}
                 </a-select-option>
@@ -164,37 +188,38 @@
           </a-row>
           <a-row>
             <a-carousel arrows class="new-card-main">
-              <div
-                slot="prevArrow"
-                slot-scope="props"
-                class="custom-slick-arrow"
-                style="left: 10px;zIndex: 1"
-              >
+              <div slot="prevArrow" slot-scope="props" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
                 <a-icon type="left-circle new22" style="color: black" />
               </div>
               <div slot="nextArrow" slot-scope="props" class="custom-slick-arrow" style="right: 10px">
                 <a-icon type="right-circle new22" style="color: black" />
               </div>
-              <div style="line-height: 30px; background-color: #FFF!important;" v-if="childList != null && childList.length > 0" v-for="(item,index) in childList">
-                <span class="card-title-font" style=" width: 100%;padding-left: 20px;text-align: left;display: block;line-height: 30px;margin-bottom: 20px;">
-					        {{item.text}}
+              <div style="line-height: 30px; background-color: #FFF!important;"
+                v-if="childList != null && childList.length > 0" v-for="(item, index) in childList">
+                <span class="card-title-font"
+                  style=" width: 100%;padding-left: 20px;text-align: left;display: block;line-height: 30px;margin-bottom: 20px;">
+                  {{ item.text }}
                 </span>
-                <div style="  font-size: 16px;    text-align: left;    padding-left: 50px; height: 40px;" class="item-concel-iii">
-                  产能进度(%):<a-progress :percent="item.prodCapacity" style="width: 50%;" strokeColor="#8A38F5"/>
+                <div style="  font-size: 16px;    text-align: left;    padding-left: 50px; height: 40px;"
+                  class="item-concel-iii">
+                  产能进度(%):<a-progress :percent="item.prodCapacity" style="width: 50%;" strokeColor="#8A38F5" />
                 </div>
-                <div style="  font-size: 16px;    text-align: left;    padding-left: 50px; height: 40px;" class="item-concel-iii">
-                  形象进度(%):<a-progress :percent="item.imageCapacity" style="width: 50%" strokeColor="#00BBFF"/>
+                <div style="  font-size: 16px;    text-align: left;    padding-left: 50px; height: 40px;"
+                  class="item-concel-iii">
+                  形象进度(%):<a-progress :percent="item.imageCapacity" style="width: 50%" strokeColor="#00BBFF" />
                 </div>
-                <div style="  font-size: 16px;    text-align: left;    padding-left: 50px; height: 40px;" class="item-concel-iii">
-                  资金进度(%):<a-progress :percent="item.moneyCapacity" style="width: 50%;height: 10px" strokeColor="#00B578"/>
+                <div style="  font-size: 16px;    text-align: left;    padding-left: 50px; height: 40px;"
+                  class="item-concel-iii">
+                  资金进度(%):<a-progress :percent="item.moneyCapacity" style="width: 50%;height: 10px"
+                    strokeColor="#00B578" />
                 </div>
               </div>
             </a-carousel>
           </a-row>
         </a-card>
       </a-col>
-      <a-col :span="12" v-if="queryParam.projId != null && queryParam.projId != '' && queryParam.projId != undefined">
-        <a-card style="padding: 10px 20px 30px 30px;" :loading="loading" :bordered="false" :body-style="{padding: '0'}">
+      <!-- <a-col :span="12" v-if="queryParam.projId != null && queryParam.projId != '' && queryParam.projId != undefined">
+        <a-card style="padding: 10px 20px 30px 30px;" :loading="loading" :bordered="false" :body-style="{ padding: '0' }">
           <a-col :span="12">
             <a-row>
               <a-col :span="24">
@@ -228,7 +253,7 @@
             </a-row>
           </a-col>
         </a-card>
-      </a-col>
+      </a-col> -->
 
     </a-row>
 
@@ -236,44 +261,32 @@
 
     </a-row>
 
-    <a-modal
-      title="项目地区"
-      :width="500"
-      :visible="visible1"
-      @cancel="close1">
-      <div v-for="(item,index) in projAreaList">
+    <!-- <a-modal title="项目地区" :width="500" :visible="visible1" @cancel="close1">
+      <div v-for="(item, index) in projAreaList">
         <h2>
           <span v-if="item.abbr != null && item.abbr != '' && item.abbr != undefined">
-            {{item.abbr}}-
+            {{ item.abbr }}-
           </span>
-          {{item.subject}}:{{item.num}}个
+          {{ item.subject }}:{{ item.num }}个
         </h2>
       </div>
       <template slot="footer">
         <a-button @click="close1" type="primary">取消</a-button>
       </template>
-    </a-modal>
+    </a-modal> -->
 
-    <a-modal
-      title="项目类型"
-      :width="400"
-      :visible="visible"
-      @cancel="close">
-      <div v-for="(item,index) in projTypeList">
-          <h2>{{item.projType}}:{{item.num}}个</h2>
+    <!-- <a-modal title="项目类型" :width="400" :visible="visible" @cancel="close">
+      <div v-for="(item, index) in projTypeList">
+        <h2>{{ item.projType }}:{{ item.num }}个</h2>
       </div>
       <template slot="footer">
         <a-button @click="close" type="primary">取消</a-button>
       </template>
-    </a-modal>
+    </a-modal> -->
 
-    <a-modal
-      :title="title"
-      :width="400"
-      :visible="visible2"
-      @cancel="close2">
-      <div v-for="(item,index) in payAmountList">
-        <h2>{{item.projType}}:{{ iegAmount(Math.trunc(item.payAmount),'total') }}</h2>
+    <a-modal :title="title" :width="400" :visible="visible2" @cancel="close2">
+      <div v-for="(item, index) in payAmountList">
+        <h2>{{ item.projType }}:{{ iegAmount(Math.trunc(item.payAmount), 'total') }}</h2>
       </div>
       <template slot="footer">
         <a-button @click="close2" type="primary">取消</a-button>
@@ -290,6 +303,7 @@ import newRateChart from '@/components/chart/newRateChart'
 import newRateChart2 from '@/components/chart/newRateChart2'
 import { getLoginfo, getVisitInfo } from '@/api/api'
 import { getAction } from '@api/manage'
+import '@/assets/less/TableExpand.less'
 import {
   iegAmount, isNullOrEmpty
 } from '@/utils/util'
@@ -317,21 +331,21 @@ export default {
   },
   data() {
     return {
-      title:'',
-      payAmountList:[],
-      visible2:false,
-      isorter:{
+      title: '',
+      payAmountList: [],
+      visible2: false,
+      isorter: {
         column: 'projCode',
         order: 'asc',
       },
-      visible1:false,
-      projAreaList:[],
-      projTypeList:[],
-      visible:false,
-      ipagination:{
+      visible1: false,
+      projAreaList: [],
+      projTypeList: [],
+      visible: false,
+      ipagination: {
         current: 1,
         pageSize: 10,
-        pageSizeOptions: ['10','20', '50', '100'],
+        pageSizeOptions: ['10', '20', '50', '100'],
         showTotal: (total, range) => {
           return range[0] + "-" + range[1] + " 共" + total + "条"
         },
@@ -339,46 +353,46 @@ export default {
         showSizeChanger: true,
         total: 0
       },
-      dataSource:[],
+      dataSource: [],
       columns: [
         {
           title: '序号',
           dataIndex: '',
-          key:'rowIndex',
-          width:100,
-          align:"center",
-          customRender:function (t,r,index) {
-            return parseInt(index)+1;
+          key: 'rowIndex',
+          width: 100,
+          align: "center",
+          customRender: function (t, r, index) {
+            return parseInt(index) + 1;
           }
         },
         {
-          title:'项目名称',
-          align:"center",
+          title: '项目名称',
+          align: "center",
           dataIndex: 'projName',
-          width:430,
+          width: 430,
         },
         {
-          title:'项目类型',
-          align:"center",
+          title: '项目类型',
+          align: "center",
           dataIndex: 'projType_dictText',
-          width:220,
+          width: 220,
         },
         {
-          title:'主体',
-          align:"center",
+          title: '主体',
+          align: "center",
           dataIndex: 'subject_dictText',
-          width:220,
+          width: 220,
         },
         {
-          title:'项目总投',
+          title: '项目总投',
           dataIndex: 'budgetAmount',
-          width:220,
-          customRender:function (t,r,index) {
+          width: 220,
+          customRender: function (t, r, index) {
             let icon = "";
             icon = '¥';
 
             const obj = {
-              children: icon + iegAmount(Math.trunc(t),'total'),
+              children: icon + iegAmount(Math.trunc(t), 'total'),
               attrs: {},
             };
             obj.attrs.align = 'right';//控制表体内容居右
@@ -388,12 +402,12 @@ export default {
         {
           title: '合同总额',
           dataIndex: 'usedAmount',
-          customRender:function (t,r,index) {
+          customRender: function (t, r, index) {
             let icon = "";
             icon = '¥';
 
             const obj = {
-              children: icon + iegAmount(Math.trunc(t),'total'),
+              children: icon + iegAmount(Math.trunc(t), 'total'),
               attrs: {},
             };
             obj.attrs.align = 'right';//控制表体内容居右
@@ -404,12 +418,12 @@ export default {
         {
           title: '支出金额',
           dataIndex: 'payAmount',
-          customRender:function (t,r,index) {
+          customRender: function (t, r, index) {
             let icon = "";
             icon = '¥';
 
             const obj = {
-              children: icon + iegAmount(Math.trunc(t),'total'),
+              children: icon + iegAmount(Math.trunc(t), 'total'),
               attrs: {},
             };
             obj.attrs.align = 'right';//控制表体内容居右
@@ -418,23 +432,23 @@ export default {
           width: 220,
         },
       ],
-      dictOptions:[],
-      allowClear:true,
+      dictOptions: [],
+      allowClear: true,
       iegAmount,
-      childList:[],
+      childList: [],
       capacityList: [],
       queryParam: {
         projId: undefined,
-        model:undefined
+        model: undefined
       },
       model: {
         budgetAmount: 0,
         contractAmountTaxLocal: 0,
         payAmount: 0,
-        invoiceAmount:0,
-        projAreaNum:0,
-        projTypeNum:0,
-        projNum:0
+        invoiceAmount: 0,
+        projAreaNum: 0,
+        projTypeNum: 0,
+        projNum: 0
       },
       loading: true,
       center: null,
@@ -456,17 +470,19 @@ export default {
       }, {
         text: '询价比价'
       }],
-      indicator: <a-icon type="loading" style="font-size: 24px" spin />
+      indicator: <a-icon type="loading" style="font-size: 24px" spin />,
+      activeKey:'0',
+      activeKeyChild:'0'
     }
   },
-  watch : {
+  watch: {
     queryParam: {
       handler(newObj, oldName) {
-        if(isNullOrEmpty(newObj.projId)){
+        if (isNullOrEmpty(newObj.projId)) {
           newObj.projId = undefined;
           this.queryParam.projId = undefined;
         }
-        console.log("============",newObj)
+        console.log("============", newObj)
       },
       immediate: true,
       deep: true
@@ -506,62 +522,62 @@ export default {
 
   },
   methods: {
-    jumpPlan(){
+    jumpPlan() {
       this.$router.push({
         path: '/pay/PurPayPlanList',
-        query:{}
+        query: {}
       })
     },
-    jumpContract(){
+    jumpContract() {
       this.$router.push({
         path: '/contract/BasSupplierContractList',
-        query:{}
+        query: {}
       })
     },
-    jumpProj(){
+    jumpProj() {
       this.$router.push({
         path: '/project/ProjBaseList',
-        query:{}
+        query: {}
       })
     },
-    close2(){
+    close2() {
       this.visible2 = false;
     },
-    openBudgetAmount(){
+    openBudgetAmount() {
       this.title = "项目总投";
       this.payAmountList = [];
       //获取项目类型
       let url = '/srm/projBase/fetchProjectAmountByType'
       let param = {
-        id:this.queryParam.projId
+        id: this.queryParam.projId
       }
-      getAction(url,param).then(res => {
+      getAction(url, param).then(res => {
         this.payAmountList = res.result;
       })
       this.visible2 = true;
     },
-    openContractAmount(){
+    openContractAmount() {
       this.title = "合同总额";
       this.payAmountList = [];
       //获取项目类型
       let url = '/srm/contractBase/fetchContractByProjType'
       let param = {
-        id:this.queryParam.projId
+        id: this.queryParam.projId
       }
-      getAction(url,param).then(res => {
+      getAction(url, param).then(res => {
         this.payAmountList = res.result;
       })
       this.visible2 = true;
     },
-    openPayAmount(){
+    openPayAmount() {
       this.title = "支出总额";
       this.payAmountList = [];
       //获取项目类型
       let url = "/srm/purPayPlan/fetchProjTypeAmountByProjId";
       let param = {
-        id:this.queryParam.projId
+        id: this.queryParam.projId
       }
-      getAction(url,param).then(res => {
+      getAction(url, param).then(res => {
         this.payAmountList = res.result;
       })
       this.visible2 = true;
@@ -571,11 +587,11 @@ export default {
         style: {
           // 行背景色
           'background-color': index % 2 == 0 ? '#EEEEEE' : '#FFFFFF',
-          height:'90px'
+          height: '90px'
         }
       }
     },
-    fetchModel(){
+    fetchModel() {
       this.fetchContractQty();
       this.fetchArrivalQty();
       this.fetchChildProgress();
@@ -584,32 +600,32 @@ export default {
         this.$refs.chart3.initData(this.model.cpercent);
       }, 800)
     },
-    close1(){
+    close1() {
       this.visible1 = false;
     },
-    openProjArea(){
+    openProjArea() {
       this.projAreaList = [];
       //获取项目类型
       let url = "/srm/projBase/fetchProjArea";
       let param = {
-        id:this.queryParam.projId
+        id: this.queryParam.projId
       }
-      getAction(url,param).then(res => {
+      getAction(url, param).then(res => {
         this.projAreaList = res.result;
       })
       this.visible1 = true;
     },
-    close(){
+    close() {
       this.visible = false;
     },
-    openProjType(){
+    openProjType() {
       this.projTypeList = [];
       //获取项目类型
       let url = "/srm/projBase/fetchProjType";
       let param = {
-        id:this.queryParam.projId
+        id: this.queryParam.projId
       }
-      getAction(url,param).then(res => {
+      getAction(url, param).then(res => {
         this.projTypeList = res.result;
       })
       this.visible = true;
@@ -618,7 +634,7 @@ export default {
       this.ipagination = pagination;
       this.loadData();
     },
-    loadData(arg){
+    loadData(arg) {
       this.dataSource = [];
       let url = "/srm/projBase/list";
       //加载数据 若传入参数1则加载第一页的内容
@@ -634,51 +650,50 @@ export default {
       getAction(url, params).then((res) => {
         if (res.success) {
           //update-begin---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
-          this.dataSource = res.result.records||res.result;
-          if(res.result.total)
-          {
+          this.dataSource = res.result.records || res.result;
+          if (res.result.total) {
             this.ipagination.total = res.result.total;
-          }else{
+          } else {
             this.ipagination.total = 0;
           }
           //update-end---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
-        }else{
+        } else {
           this.$message.warning(res.message)
         }
       }).finally(() => {
         this.loading = false
       })
     },
-    fetchInvoiceByProjId(){
+    fetchInvoiceByProjId() {
       let url = "/srm/purchasePayInovice/fetchInvoiceByProjId";
       let param = {
         projectId: this.queryParam.projId
       }
-      getAction(url,param).then(res => {
-        if(res.result != null && res.result.length > 0){
+      getAction(url, param).then(res => {
+        if (res.result != null && res.result.length > 0) {
           this.model.invoiceAmount = res.result[0].invoiceAmountTaxLocal;
-        }else{
+        } else {
           this.model.invoiceAmount = 0;
         }
         this.$forceUpdate();
       })
     },
-    fetchModelByProjId(){
+    fetchModelByProjId() {
       this.dictOptions = [];
       this.queryParam.model = undefined;
       let url = "/srm/projBase/fetchModelByProjId";
       let param = {
-        id:this.queryParam.projId
+        id: this.queryParam.projId
       }
-      getAction(url,param).then(res => {
+      getAction(url, param).then(res => {
         this.dictOptions = res.result;
       })
     },
-    searchQuery(val,options) {
+    searchQuery(val, options) {
       this.queryParam.projName = null;
-      if(options != null){
+      if (options != null) {
         options.filter(item => {
-          if(val == item.value){
+          if (val == item.value) {
             this.queryParam.projName = item.label || item.text;
           }
         })
@@ -713,25 +728,25 @@ export default {
 
     },
     //子项目数量
-    fetchChildProgress(){
+    fetchChildProgress() {
       this.childList = [];
       let url = "/srm/projBase/fetchChildProgress";
       let param = {
-        model:this.queryParam.model,
-        projectId:this.queryParam.projId
+        model: this.queryParam.model,
+        projectId: this.queryParam.projId
       }
-      getAction(url,param).then(res => {
+      getAction(url, param).then(res => {
         let data = res.result;
         this.childList = data;
         this.$forceUpdate();
       })
     },
-    fetchContractQty(){
+    fetchContractQty() {
       this.model.cpercent = 0;
       let url = '/srm/contractBase/fetchContractQty'
       let param = {
         projectId: this.queryParam.projId,
-        model:this.queryParam.model
+        model: this.queryParam.model
       }
       getAction(url, param).then(res => {
         if (res.result != null) {
@@ -746,7 +761,7 @@ export default {
       let url = '/srm/stkIoBill/fetchArrivalQty'
       let param = {
         projectId: this.queryParam.projId,
-        model:this.queryParam.model
+        model: this.queryParam.model
       }
       getAction(url, param).then(res => {
         if (res.result != null) {
@@ -770,12 +785,12 @@ export default {
       })
     },
     //项目数量统计
-    fetchProjNum(){
+    fetchProjNum() {
       this.model.projAreaNum = 0;
       this.model.projNum = 0;
       this.model.projTypeNum = 0;
       let url = '/srm/projBase/fetchProjNum'
-      let param = {id: this.queryParam.projId}
+      let param = { id: this.queryParam.projId }
       getAction(url, param).then(res => {
         if (res.result != null) {
           this.model.projAreaNum = res.result.projAreaNum;
@@ -789,7 +804,7 @@ export default {
     fetchProjectAmount() {
       this.model.budgetAmount = 0;
       let url = '/srm/projBase/fetchProjectAmount'
-      let param = {id: this.queryParam.projId}
+      let param = { id: this.queryParam.projId }
       getAction(url, param).then(res => {
         if (res.result != null) {
           this.model.budgetAmount = res.result.budgetAmount
@@ -801,7 +816,7 @@ export default {
     fetchContractByProjId() {
       this.model.contractAmountTaxLocal = 0;
       let url = '/srm/contractBase/fetchContractByProjId'
-      let param = {projectId: this.queryParam.projId}
+      let param = { projectId: this.queryParam.projId }
       getAction(url, param).then(res => {
         if (res.result != null) {
           this.model.contractAmountTaxLocal = res.result.contractAmountTaxLocal
@@ -813,7 +828,7 @@ export default {
     fetchPayAmountByProjId() {
       this.model.payAmount = 0;
       let url = '/srm/purPayPlan/fetchPayAmountByProjId'
-      let param = {projectId: this.queryParam.projId}
+      let param = { projectId: this.queryParam.projId }
       getAction(url, param).then(res => {
         if (res.result != null) {
           this.model.payAmount = res.result.payAmountCope
@@ -871,34 +886,56 @@ export default {
           this.visitInfo = res.result
         }
       })
-    }
+    },
+    handleChange(tabKey){
+      if(tabKey == '0'){
+        this.queryParam.status = '0';
+      }else if(tabKey == '1'){
+        this.queryParam.status = '1';
+      }else if(tabKey == '2'){
+        this.queryParam.status = '2';
+      }else if(tabKey == '3'){
+        this.queryParam.status = '3';
+      }else if(tabKey == '4'){
+        this.queryParam.status = '4';
+      }
+      this.searchQuery();
+    },
+    searchQuery() {
+      this.loadData(1);
+    },
   }
 }
 </script>
 <style>
-.new-card-main .ant-progress.ant-progress-line{
-		margin-left: 30px;
-	}
-	.new-card-main .ant-carousel .slick-initialized .slick-slide {
-		background: #FFF!important;
-	}
-	.item-concel-iii{
+.new-card-main .ant-progress.ant-progress-line {
+  margin-left: 30px;
+}
 
-	}
-	.item-concel-iii .ant-progress .ant-progress-outer .ant-progress-inner{
-		height: 20px!important;
-		border-radius: 0!important;
-	}
-	.item-concel-iii .ant-progress .ant-progress-outer .ant-progress-inner .ant-progress-bg{
-		height: 20px!important;
-		border-radius: 0!important;
-	}
-	.new-card-main .ant-progress.ant-progress-line{
-		margin-left: 30px;
-	}
-	.new-card-main .ant-carousel .slick-initialized .slick-slide {
-		background: #FFF!important;
-	}
+.new-card-main .ant-carousel .slick-initialized .slick-slide {
+  background: #FFF !important;
+}
+
+.item-concel-iii {}
+
+.item-concel-iii .ant-progress .ant-progress-outer .ant-progress-inner {
+  height: 20px !important;
+  border-radius: 0 !important;
+}
+
+.item-concel-iii .ant-progress .ant-progress-outer .ant-progress-inner .ant-progress-bg {
+  height: 20px !important;
+  border-radius: 0 !important;
+}
+
+.new-card-main .ant-progress.ant-progress-line {
+  margin-left: 30px;
+}
+
+.new-card-main .ant-carousel .slick-initialized .slick-slide {
+  background: #FFF !important;
+}
+
 .point-div {
   line-height: 50px;
 }
@@ -983,11 +1020,10 @@ export default {
     }
   }
 }
-
 </style>
 <style scoped>
 /* For demo */
-.ant-carousel >>> .slick-slide {
+.ant-carousel>>>.slick-slide {
   text-align: center;
   height: 160px;
   line-height: 160px;
@@ -995,7 +1031,7 @@ export default {
   overflow: hidden;
 }
 
-.ant-carousel >>> .custom-slick-arrow {
+.ant-carousel>>>.custom-slick-arrow {
   width: 25px;
   height: 25px;
   font-size: 25px;
@@ -1004,26 +1040,29 @@ export default {
   opacity: 0.3;
 }
 
-.ant-carousel >>> .custom-slick-arrow:before {
+.ant-carousel>>>.custom-slick-arrow:before {
   display: none;
 }
 
-.ant-carousel >>> .custom-slick-arrow:hover {
+.ant-carousel>>>.custom-slick-arrow:hover {
   opacity: 0.5;
 }
 
-.ant-carousel >>> .slick-slide h3 {
+.ant-carousel>>>.slick-slide h3 {
   color: #fff;
 }
-.circle{
+
+.circle {
   border-radius: 100%;
   overflow: hidden;
   width: 100px;
   height: 80px;
 }
-.circle img{
+
+.circle img {
   height: 100%;
 }
+
 .ant-table-striped :deep(.table-striped) td {
   background-color: #fafafa;
 }
