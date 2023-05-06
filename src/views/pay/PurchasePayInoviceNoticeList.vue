@@ -144,7 +144,14 @@
       width:160,
       ellipsis:true,
     },
-
+    {
+      title:'开票名称',
+      align:"center",
+      sorter: true,
+      dataIndex: 'invoiceName',
+      width:160,
+      ellipsis:true,
+    },
     // {
     //   title:'项目名称',
     //   align:"center",
@@ -164,15 +171,15 @@
     //     customRender: 'contractName'
     //   },
     // },
-    {
-      title:'合同编码',
-      align:"center",
-      sorter: true,
-      dataIndex: 'contractNumber',
-      width:200,
-      ellipsis:true,
-      scopedSlots: { customRender: 'contractNumber' }
-    },
+    // {
+    //   title:'合同编码',
+    //   align:"center",
+    //   sorter: true,
+    //   dataIndex: 'contractNumber',
+    //   width:200,
+    //   ellipsis:true,
+    //   scopedSlots: { customRender: 'contractNumber' }
+    // },
 
     // {
     //   title:'付款类型',
@@ -292,19 +299,19 @@
       },
       width:120,
     },
-    {
-      title:'发票税率(%)',
-      sorter: true,
-      dataIndex: 'taxRate',
-      width:120,
-      customRender:function (text) {
-        if(text == '100'){
-          return '其他'
-        }else{
-          return text;
-        }
-      },
-    },
+    // {
+    //   title:'发票税率(%)',
+    //   sorter: true,
+    //   dataIndex: 'taxRate',
+    //   width:120,
+    //   customRender:function (text) {
+    //     if(text == '100'){
+    //       return '其他'
+    //     }else{
+    //       return text;
+    //     }
+    //   },
+    // },
     // {
     //   title:'发票编号',
     //   align:"center",
@@ -320,12 +327,12 @@
       dataIndex: 'invoiceType_dictText',
       width:120,
     },
-    {
-      title:'备注',
-      align:"center",
-      dataIndex: 'remark',
-      width:200,
-    },
+    // {
+    //   title:'备注',
+    //   align:"center",
+    //   dataIndex: 'remark',
+    //   width:200,
+    // },
     {
       title: '操作',
       dataIndex: 'action',

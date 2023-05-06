@@ -62,7 +62,7 @@ import { getAction } from '@api/manage'
 
   export default {
 		name: 'DeliveryObjectModal',
-    props:['contractId','ptype','ids'],
+    props:['suppId','currency','ids'],
 		components: {
 
 		},
@@ -93,16 +93,28 @@ import { getAction } from '@api/manage'
         columns:[
           {
             title: '序号',
-            dataIndex: 'sort',
-            width:60,
-            align:"center",
+            dataIndex: '',
+            key: 'rowIndex',
+            width: 60,
+            align: "center",
+            customRender: function(t, r, index) {
+              return parseInt(index) + 1;
+            }
           },
-          // {
-          //   title: '设备编码',
-          //   dataIndex: 'prodCode',
-          //   align:"center",
-          //   width:140,
-          // },
+          {
+            title: '合同编码',
+            dataIndex: 'contractNumber',
+            align:"center",
+            width:120,
+            ellipsis:true,
+          },
+          {
+            title: '合同名称',
+            dataIndex: 'contractName',
+            align:"center",
+            width:120,
+            ellipsis:true,
+          },
           {
             title: '设备名称',
             dataIndex: 'prodName',
@@ -110,21 +122,8 @@ import { getAction } from '@api/manage'
             width:180,
             ellipsis:true,
           },
-          // {
-          //   title: '规格型号',
-          //   dataIndex: 'prodSpecType',
-          //   width:120,
-          //   align:"center",
-          //   ellipsis:true,
-          // },
-          // {
-          //   title: '计量单位',
-          //   dataIndex: 'unitId_dictText',
-          //   width:120,
-          //   align:"center",
-          // },
           {
-            title: '采购数量',
+            title: '入库数量',
             dataIndex: 'qty',
             align:"center",
             width:120,
@@ -210,24 +209,24 @@ import { getAction } from '@api/manage'
               return obj;
             }
           },
-          {
-            title: '已付金额',
-            dataIndex: 'payRate',
-            align:"center",
-            width:120,
-          },
+          // {
+          //   title: '已付金额',
+          //   dataIndex: 'payRate',
+          //   align:"center",
+          //   width:120,
+          // },
           {
             title: '已开票比例(%)',
             dataIndex: 'invoiceRate',
             align:"center",
             width:120,
           },
-          {
-            title: '交期',
-            dataIndex: 'planDeliveryDate',
-            align:"center",
-            width:120,
-          },
+          // {
+          //   title: '交期',
+          //   dataIndex: 'planDeliveryDate',
+          //   align:"center",
+          //   width:120,
+          // },
         ],
 				width: '90%',
 				visible: false,
@@ -274,13 +273,12 @@ import { getAction } from '@api/manage'
           this.ipagination.current = 1;
         }
 
-        let url = "/srm/contractBase/listByDetailList";
+        let url = "/srm/stkIoBill/fetchDetailPageList";
         var param = this.queryParam;
         param.pageNo = this.ipagination.current;
         param.pageSize = this.ipagination.pageSize;
-        param.contractId = this.contractId;
-        param.ptype = this.ptype;
-        param.id = this.ids;
+        param.suppId = this.suppId;
+        param.currency = this.currency;
         getAction(url, param).then((res) => {
           if (res.success) {
             //update-begin---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
