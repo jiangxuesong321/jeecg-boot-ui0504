@@ -32,8 +32,6 @@
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
     "md5": "^2.2.1",
-    "mini-css-extract-plugin": "^2.7.5",
-    "node-sass": "^4.14.1",
     "nprogress": "^0.2.0",
     "qiankun": "^2.5.1",
     "tinymce": "5.4.1",
@@ -53,6 +51,7 @@
     "vuex": "^3.1.0",
     "vxe-table": "2.9.13",
     "vxe-table-plugin-antd": "1.8.10",
+    "webpack": "^4.4.1",
     "xe-utils": "2.4.8"
   },
   "devDependencies": {
@@ -67,6 +66,7 @@
     "eslint-plugin-vue": "^5.1.0",
     "html-webpack-plugin": "^4.2.0",
     "less": "^3.9.0",
+    "node-sass": "^4.14.1",
     "sass-loader": "^10.4.1",
     "vue-template-compiler": "^2.6.10"
   },
