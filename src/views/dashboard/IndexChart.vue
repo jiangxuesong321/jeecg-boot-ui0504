@@ -33,7 +33,7 @@
       </a-col>
       <a-col :sm="24" :md="12" :xl="8" :style="{ marginBottom: '24px' }">
         <a-card class="card-main-index1 ">
-          <img src="~@/assets/物资.png"
+          <img src="~@/assets/物资.png" 
             style="width: 30px;height: 30px;float: left;position:absolute;margin-left: 125px;margin-top: 13px">
           <div class="right-content green-money">
             <div style="display: inline-block;">
