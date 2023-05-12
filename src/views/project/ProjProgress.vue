@@ -5,29 +5,25 @@
     </div>
     <div class="table-page-search-wrapper">
 
-      <a-steps v-model:current="current" type="navigation" :style="stepStyle">
+      <a-steps v-model:current="current" type="navigation" :style="stepStyle" @change="handleChange">
         <a-step title="需求阶段">
-
         </a-step>
         <a-step title="评估设计阶段">
-
         </a-step>
         <a-step title="决策阶段">
-
         </a-step>
         <a-step title="采购执行">
-
         </a-step>
       </a-steps>
     </div>
 
     <div class="table-page-search-wrapper">
-      <a-form layout="inline">
+      <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :span="6">
             <a-form-item label="项目列表" :labelCol="spans.labelCol3" :wrapperCol="spans.wrapperCol3">
               <a-select placeholder="请选择项目" v-model="projectSelect" :value='projectSelect' :key="projectSelect"
-                @change="searchQuery" :options="projectListOptions" />
+                @change="searchQuery1" :options="projectListOptions" />
             </a-form-item>
           </a-col>
 
@@ -36,12 +32,85 @@
     </div>
 
     <div style="display: flex;">
-      <a-steps v-model:current="currentChild" direction="vertical" style="width: 15%" size="small" progress-dot>
+      <!-- <template> -->
+      <span style="width: 15%">
+        <!-- <a-tree :defaultExpandAll="true" @select="onSelect" show-line class="tree-data" :selectedKeys="selectedKeys"
+          :default-expanded-keys="['0-0']" :treeData="dataSourceChild" 
+          :expandedKeys="iExpandedKeys" :autoExpandParent="true"> -->
+        <a-tree   v-if='dataSourceChild.length' defaultExpandParent="true" show-line :default-expanded-keys="['0-0']" @select="onSelect" class="tree-data" :treeData="dataSourceChild" :replaceFields='replaceFields'>
+          <!-- <a-icon slot="switcherIcon" type="down" /> -->
+          <div slot="custom" slot-scope="item" class="custom-item">
+            <a-tooltip placement="top">
+              <template slot="title">
+                <div>{{ item.title }}</div>
+              </template>
+              <span class="tree-title">
+                {{ item.title }}
+              </span>
+            </a-tooltip>
+          </div>
+        </a-tree>
+      </span>
+      <!-- </template> -->
+      <!-- <a-steps v-model:current="currentChild" direction="vertical" style="width: 15%"  progress-dot>
         <a-step v-for=" item  in  dataSourceChild " :key="item.name" :title="item.name"></a-step>
-      </a-steps>
-      <a-table ref="table" size="middle" bordered rowKey="id" class="j-table-force-nowrap" :columns="columns"
-        :dataSource="dataSource" :scroll="{ x: true, y: 400 }" :pagination="ipagination" :loading="loading"
-        @change="handleTableChange" style="width: 85%;margin-top: -42px;">
+      </a-steps> -->
+      <a-table ref="table" style="width: 85%;margin-top: -42px;" size="middle" :scroll="{ x: 1200, y: 500 }" bordered
+        rowKey="id" :columns="columns" :dataSource="tableModel" :pagination="false" :loading="loading"
+        @change="handleTableChange">
+
+        <template slot="reqTitle" slot-scope="text,record">
+          <div style="width: 180px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :title="text">
+            {{ text }}
+          </div>
+        </template>
+
+        <template slot="projectName" slot-scope="text,record">
+          <div style="width: 180px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :title="text">
+            {{ text }}
+          </div>
+        </template>
+
+
+        <template slot="reqCode" slot-scope="text,record">
+          <a @click='handleDetail(record)'>{{ text }}</a>
+        </template>
+
+        <template slot="reqStatus_dictText" slot-scope="text,record">
+          <span v-if="record.reqStatus == '0'">
+            <a-tag color="orange" class="tag-orange">
+              {{ text }}
+            </a-tag>
+          </span>
+          <span v-if="record.reqStatus == '1'">
+            <a-tag color="#2db7f5" class="tag-blue">
+              {{ text }}
+            </a-tag>
+          </span>
+          <span v-if="record.reqStatus == '2'">
+            <a-tag color="#87d068" class="tag-green">
+              {{ text }}
+            </a-tag>
+          </span>
+          <span v-if="record.reqStatus == '3'">
+            <a-tag color="red" class="tag-red">
+              {{ text }}
+            </a-tag>
+          </span>
+          <span v-if="record.reqStatus == '4'">
+            <a-tag color="#DDDDDD" class="tag-gray">
+              {{ text }}
+            </a-tag>
+          </span>
+        </template>
+
+        <span slot="action" slot-scope="text, record">
+          <a @click="handleEdit(record)" v-show="record.reqStatus == '0' || record.reqStatus == '3'">编辑</a>
+          <a-divider type="vertical" v-show="record.reqStatus == '0' || record.reqStatus == '3'" />
+          <a @click="handleDetail(record)">查看</a>
+          <!-- <a-divider type="vertical" v-if="record.reqStatus != '4'"/>
+          <a @click="handleCancel(record)" v-if="record.reqStatus != '4'">取消</a> -->
+        </span>
 
       </a-table>
     </div>
@@ -52,7 +121,6 @@
 <script>
 import '@/assets/less/TableExpand.less'
 import { filterObj } from '@/utils/util'
-
 import { JeecgListMixin } from '@/mixins/JeecgListMixin'
 import ProjBaseModal from './modules/ProjBaseModal'
 import { iegAmount, isNullOrEmpty } from '@/utils/util'
@@ -61,8 +129,6 @@ import { billModalMixin } from '../mixins/billModalMixin'
 import ListColumnsSetter from '@views/components/ListColumnsSetter'
 import Vue from 'vue'
 import Sortable from 'sortablejs'
-
-// import ProjRateModal from '@views/project/modules/ProjRateModal'
 import { getAction, postAction } from '@/api/manage'
 
 
@@ -78,50 +144,75 @@ let columns = [
     }
   },
   {
-    title: '采购申请单号',
+    title: '申请编号',
+    align: "center",
     dataIndex: 'reqCode',
-    align: 'center',
     sorter: true,
     scopedSlots: { customRender: 'reqCode' },
     width: 120,
   },
   {
-    title: '采购申请标题',
+    title: '申请标题',
+    align: "center",
+    sorter: true,
     dataIndex: 'reqTitle',
-    align: 'center',
-    sorter: true,
     width: 180,
+    scopedSlots: { customRender: 'reqTitle' },
   },
   {
-    title: '产品名称',
-    width: 120,
-    align: 'center',
+    title: '项目名称',
+    align: "center",
     sorter: true,
-    dataIndex: 'prodName'
+    dataIndex: 'projectName',
+    width: 180,
+    scopedSlots: { customRender: 'projectName' },
   },
   {
-    title: '产品编码',
-    width: 120,
-    align: 'center',
+    title: '采购类型',
+    align: "center",
     sorter: true,
-    dataIndex: 'prodCode'
+    dataIndex: 'reqType_dictText',
+    width: 120,
   },
-
   {
-    title: '审批时间',
-    dataIndex: 'approveTime',
-    align: 'center',
+    title: '申请部门',
+    align: "center",
     sorter: true,
+    dataIndex: 'reqOrgId_dictText',
     width: 120,
+  },
+  {
+    title: '申请人',
+    align: "center",
+    sorter: true,
+    dataIndex: 'applyUserId_dictText',
+    width: 120,
+  },
+  {
+    title: '申请日期',
+    align: "center",
+    dataIndex: 'reqDate',
+    sorter: true,
     customRender: function (text) {
       return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text)
-    }
+    },
+    width: 120,
+  },
+  {
+    title: '审核状态',
+    align: "center",
+    sorter: true,
+    dataIndex: 'reqStatus_dictText',
+    width: 120,
+    scopedSlots: {
+      customRender: 'reqStatus_dictText'
+    },
   },
 
   {
     title: '操作',
     dataIndex: 'action',
-    align: 'center',
+    align: "center",
     width: 100,
     scopedSlots: {
       customRender: 'action'
@@ -188,56 +279,23 @@ const ResizeableTitle = (h, props, children) => {
 
 export default {
   name: 'ProjProgress',
-  // mixins: [JeecgListMixin, mixinDevice, billListMixin, billModalMixin],
   mixins: [JeecgListMixin, billListMixin, billModalMixin],
   components: {
     ProjBaseModal,
     ListColumnsSetter,
-    // ProjRateModal
   },
   data() {
     return {
+      autoExpandParent: true,
+      iExpandedKeys: [],
+      checkStrictly: true,
       projectSelect: 0,//项目选择key
       projectSelect1: 0,//项目选择key
       projectListOptions: [],//项目列表
-      dataSourceChild: [],
-      //子列表
-      childColumns: [
-        {
-          title: '序号',
-          dataIndex: '',
-          key: 'rowIndex',
-          width: 60,
-          align: "center",
-          customRender: function (t, r, index) {
-            return parseInt(index) + 1;
-          }
-        },
-        {
-          title: '项目子项',
-          dataIndex: 'model_dictText',
-          width: 160,
-        },
-        {
-          title: '执行金额',
-          dataIndex: 'budgetAmount',
-          width: 120,
-          customRender: function (t, r, index) {
-            return iegAmount(t, 'total')
-          }
-        },
-        {
-          title: '形象进度',
-          dataIndex: 'iprogress',
-          width: 120,
-        },
-        {
-          title: '产能',
-          dataIndex: 'neck',
-          width: 120,
-          scopedSlots: { customRender: 'neck' },
-        },
+      dataSourceChild: [
       ],
+ 
+      tableModel: [],
       current: 0,
       currentChild: 0,
       stepStyle: {
@@ -254,8 +312,13 @@ export default {
       columns,
       description: 'proj_base管理页面',
       url: {
-        list: "/srm/projBase/list",
+        list: "/srm/projProgress/request_main/list",
+        modelList: "/srm/projBase/list",
         fetchLastCategory: "srm/projBase/fetchLastCategory",
+
+      },
+      replaceFields:{
+        children:'children', title:'gccategoryId_dictText_name', key:'categoryId' // 看你的接口返回字段是什么，对应匹配就行了
       },
     }
   },
@@ -271,9 +334,15 @@ export default {
 
   },
   methods: {
-    searchQuery() {
+    onSelect(selectedKeys, info) {
+      console.log('selected', selectedKeys, info);
+      this.loadTableData(selectedKeys);
+    },
+    searchQuery1() {
+      this.loadChildData();
       this.loadTableData();
     },
+
     customRow(record, index) {
       return {
         style: {
@@ -316,7 +385,7 @@ export default {
     },
     loadData(arg) {
       var that = this;
-      if (!this.url.list) {
+      if (!this.url.modelList) {
         this.$message.error("请设置url.list属性!")
         return
       }
@@ -338,7 +407,7 @@ export default {
       }
       this.loading = true;
       params1.pageSize = "";
-      getAction(this.url.list, params1).then((res) => {
+      getAction(this.url.modelList, params1).then((res) => {
         if (res.success) {
           that.projectList = res.result.records || res.result;
           if (res.result.total) {
@@ -359,6 +428,7 @@ export default {
           getAction(that.url.fetchLastCategory, params).then((res) => {
             if (res.success) {
               that.dataSource = res.result.records || res.result;
+
               that.dataSourceChild = res.result[0].children;
               if (res.result.total) {
                 that.ipagination.total = res.result.total;
@@ -378,21 +448,45 @@ export default {
         this.loading = false
       })
 
+      this.loadTableData();
 
     },
     // 加载table数据
-    loadTableData() {
+    loadChildData() {
       var that = this;
       var params = this.getQueryParams1();//查询条件
       getAction(this.url.fetchLastCategory, params).then((res) => {
         if (res.success) {
           this.dataSource = res.result.records || res.result;
           this.dataSourceChild = res.result[0].children;
-          if (res.result.total) {
-            this.ipagination.total = res.result.total;
-          } else {
-            this.ipagination.total = 0;
-          }
+
+        } else {
+          this.$message.warning(res.message)
+        }
+      }).finally(() => {
+        this.loading = false
+      })
+    },
+    // 加载table数据
+    loadTableData(key) {
+      var that = this;
+      var params = this.getQueryParams();//查询条件
+      // params.field = this.projectSelect;
+      if (key){
+        params.categoryId = key;
+      }else{
+        params.categoryId = "";
+      }
+      
+
+      getAction(this.url.list, params).then((res) => {
+        if (res.success) {
+          this.tableModel = res.result.records || res.result;
+            // if (res.result.total) {
+            //   this.ipagination.total = res.result.total;
+            // } else {
+            //   this.ipagination.total = 0;
+            // }
         } else {
           this.$message.warning(res.message)
         }
@@ -411,8 +505,21 @@ export default {
       this.$refs.modalForm.title = "详情";
       this.$refs.modalForm.disableSubmit = true;
     },
-    getFilterOptions() {
+
+    handleChange(tabKey) {
+      if (tabKey == '0') {
+        this.dataSourceChild = this.dataSource[0].children;
+      } else if (tabKey == '1') {
+        this.dataSourceChild = this.dataSource[1].children;
+      } else if (tabKey == '2') {
+        this.dataSourceChild = this.dataSource[2].children;
+      } else if (tabKey == '3') {
+        this.dataSourceChild = this.dataSource[3].children;
+      }
+
+      this.loadTableData();
     },
+
 
     columnsDrop() {
       const wrapperTr = document.querySelector('.ant-table-thead tr')
@@ -446,6 +553,21 @@ export default {
 <style lang="less" scoped>
 .ant-row.ant-form-item {
   margin-bottom: 12px;
+}
+
+.tree-data {
+
+  .custom-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .tree-title {
+    width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 </style>
 <style>
