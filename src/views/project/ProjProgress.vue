@@ -4,7 +4,6 @@
       项目进度
     </div>
     <div class="table-page-search-wrapper">
-
       <div class="table-page-search-wrapper">
         <a-form layout="inline" @keyup.enter.native="searchQuery">
           <a-row :gutter="24">
@@ -17,27 +16,15 @@
           </a-row>
         </a-form>
       </div>
-
+      <!-- 页面阶段步骤条 -->
       <a-steps v-model:current="current" type="navigation" :style="stepStyle" @change="handleChange">
         <a-step v-for="item in dataSource" :title="item.title"></a-step>
-        <!-- 
-        <a-step title="需求阶段">
-        </a-step>
-        <a-step title="评估设计阶段">
-        </a-step>
-        <a-step title="决策阶段">
-        </a-step>
-        <a-step title="采购执行">
-        </a-step> -->
       </a-steps>
+
     </div>
-
-
     <div style="display: flex;">
+      <!-- 左侧目录 -->
       <span style="width: 15%">
-        <!-- <a-tree :defaultExpandAll="true" @select="onSelect" show-line class="tree-data" :selectedKeys="selectedKeys"
-          :default-expanded-keys="['0-0']" :treeData="dataSourceChild" 
-          :expandedKeys="iExpandedKeys" :autoExpandParent="true"> -->
         <a-tree style="line-height: 2.5" v-if='dataSourceChild.length' show-line :default-expanded-keys="['0-0']"
           @select="onSelect" class="tree-data" :treeData="dataSourceChild" :replaceFields='replaceFields'>
           <a-icon slot="switcherIcon" type="down" />
@@ -53,30 +40,21 @@
           </div>
         </a-tree>
       </span>
-      <!-- <a-steps v-model:current="currentChild" direction="vertical" style="width: 15%"  progress-dot>
-        <a-step v-for=" item  in  dataSourceChild " :key="item.name" :title="item.name"></a-step>
-      </a-steps> -->
+
+      <!-- 右侧table需求阶段页面 -->
       <a-table v-if="current == '0'" ref="table" style="width: 85%;margin-top: -42px;" :scroll="{ x: 1200, y: 500 }"
         rowKey="id" :columns="columns" :dataSource="tableModel" :pagination="false" :loading="loading"
         @change="handleTableChange">
-
         <template slot="reqTitle" slot-scope="text,record">
           <div style="width: 180px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :title="text">
             {{ text }}
           </div>
         </template>
-
         <template slot="projectName" slot-scope="text,record">
           <div style="width: 180px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :title="text">
             {{ text }}
           </div>
         </template>
-
-
-        <!-- <template slot="reqCode" slot-scope="text,record">
-          <a @click='handleDetail(record)'>{{ text }}</a>
-        </template> -->
-
         <template slot="reqStatus_dictText" slot-scope="text,record">
           <span v-if="record.reqStatus == '0'">
             <a-tag color="orange" class="tag-orange">
@@ -109,22 +87,34 @@
           <a-divider type="vertical" v-show="record.reqStatus == '0' || record.reqStatus == '3'" />
           <a @click="handleBidding(record)">发布招标</a>
         </span>
-
       </a-table>
+
       <!-- 评估设计阶段区域-begin -->
       <a-table v-if="current == '1'" ref="table" style="width: 85%;margin-top: -42px;" :scroll="{ x: 1200, y: 500 }"
         rowKey="id" :columns="columns1" :dataSource="table1Model" :pagination="false" :loading="loading"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: 'checkbox' }">
-
       </a-table>
-
       <!-- 评估设计阶段区域-end -->
+
+      <!-- 决策阶段区域-begin -->
+      <a-table v-if="current == '2'" ref="table" style="width: 85%;margin-top: -42px;" :scroll="{ x: 1200, y: 500 }"
+        rowKey="id" :columns="columns1" :dataSource="table2Model" :pagination="false" :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: 'checkbox' }">
+      </a-table>
+       <!-- 决策阶段区域 end -->
+
+             <!-- 决策阶段区域-begin -->
+      <a-table v-if="current == '3'" ref="table" style="width: 85%;margin-top: -42px;" :scroll="{ x: 1200, y: 500 }"
+        rowKey="id" :columns="columns1" :dataSource="table3Model" :pagination="false" :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: 'checkbox' }">
+      </a-table>
+       <!-- 决策阶段区域 end -->
     </div>
+   
     <div style="text-align: right;margin-top:15px;" v-if="current == '1'">
       <a-button type="primary" style="margin-left:10px;">询价问价</a-button>
       <a-button type="primary" style="margin-left:10px;">发布招标</a-button>
     </div>
-
     <bidding-main-modal ref="modalBidding" @ok="modalFormOk" />
   </a-card>
 </template>
@@ -310,6 +300,8 @@ export default {
       dataSourceChild: [],
       tableModel: [],
       table1Model: [],
+      table2Model: [],
+      table3Model: [],
       zhaobiaoModel: [],
       xunjiaModel: [],
       // xunjiaModel: [{
@@ -327,9 +319,6 @@ export default {
       //   "inquiryName":"11"
 
       // }
-
-
-
       // ],
       current: 0,
       currentChild: 0,
@@ -351,8 +340,9 @@ export default {
         modelList: "/srm/projBase/list",
         // fetchLastCategory: "srm/projBase/fetchLastCategory",
         xunjiaList: "/srm/projProgress/list", //询价单列表
-        zhaobiaoList: "/srm/projProgress/evaluateList", //招标列表
+        zhaobiaoList: "/srm/projProgress/zb/list", //招标列表
         fetchLastCategory: "/srm/projProgress/fetchCategory",
+        htList: "/srm/projProgress/ht/list",
 
       },
       replaceFields: {
@@ -364,7 +354,7 @@ export default {
           title: '序号',
           dataIndex: '',
           key: 'rowIndex',
-          width: 60,
+          width: 50,
           align: "center",
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
@@ -374,23 +364,23 @@ export default {
           title: '申请编号',
           align: "center",
           // sorter: true,
-          dataIndex: 'inquiryCode',
-          width: 120,
+          dataIndex: 'reqCode',
+          width: 130,
           customRender(_, row) {
-            return { children: row.inquiryCode, attrs: { rowSpan: row.inquiryCodeRowSpan } }
+            return { children: row.reqCode, attrs: { rowSpan: row.reqCodeRowSpan } }
 
           },
         },
-        // {
-        //   title: '编号',
-        //   align: "center",
-        //   // sorter: true,
-        //   dataIndex: 'inquiryCode',
-        //   width: 120,
-        // },
+        {
+          title: '编号',
+          align: "center",
+          // sorter: true,
+          dataIndex: 'inquiryCode',
+          width: 130,
+        },
 
         {
-          title: '询比价名称',
+          title: '名称',
           align: "center",
           // sorter: true,
           dataIndex: 'inquiryName',
@@ -406,7 +396,7 @@ export default {
         },
 
         {
-          title: '询价状态',
+          title: '状态',
           align: "center",
           // sorter: true,
           dataIndex: 'inquiryStatus_dictText',
@@ -454,8 +444,9 @@ export default {
   },
   methods: {
     onSelect(selectedKeys, e) {
-      if (e.selectedNodes !== undefined) {
+      if (e.selectedNodes !== undefined && e.selectedNodes[0] !== undefined) {
         if (this.current == "0") {
+
           var seletKey = e.selectedNodes[0].data.props.id
           this.loadTableData(seletKey);
         }
@@ -482,7 +473,7 @@ export default {
       return arr
     },// 表格合并
     mergeRowCell(data) {
-      let tableData = this.rowSpan('inquiryCode', data)
+      let tableData = this.rowSpan('reqCode', data)
 
       this.table1Model = tableData
     },
@@ -490,6 +481,7 @@ export default {
     searchQuery1() {
       this.loadChildData();
       this.loadTableData();
+      this.loadTableData1();
     },
 
     customRow(record, index) {
@@ -603,6 +595,7 @@ export default {
     // 加载子分类数据
     loadChildData() {
       var that = this;
+      this.loading = true;
       var params = this.getQueryParams1();//查询条件
       getAction(this.url.fetchLastCategory, params).then((res) => {
         if (res.success) {
@@ -633,6 +626,7 @@ export default {
     // 加载需求阶段table数据
     loadTableData(key) {
       var that = this;
+      this.loading = true;
       var params = this.getQueryParams();//查询条件
       if (key) {
         params.categoryId = key;
@@ -658,36 +652,40 @@ export default {
     // 加载评估设计阶段数据
     loadTableData1(key) {
       var that = this;
+      this.loading = true
       var params = this.getQueryParams();//查询条件
-      // if (key) {
-      //   params.categoryId = key;
-      // } else {
 
-      // }
       params.categoryId = "c5fbc2d4-b1df-40aa-8410-ea5cf3d9cd5f";
       getAction(this.url.xunjiaList, params).then((res) => {
         if (res.success) {
           that.xunjiaModel = res.result.records || res.result;
           that.table1Model = Object.assign([], that.xunjiaModel);
+          if (key) {
+            params.categoryId = key;
+          } else {
+
+          }
           getAction(this.url.zhaobiaoList, params).then((res) => {
             if (res.success) {
               that.zhaobiaoModel = res.result.records || res.result;
               for (var i = 0; i < that.zhaobiaoModel.length; i++) {
                 var tempList = [];
+                tempList.reqCode = that.zhaobiaoModel[i].reqCode;//编码
                 tempList.inquiryCode = that.zhaobiaoModel[i].biddingNo;//编码
                 tempList.inquiryName = that.zhaobiaoModel[i].biddingName;//编码名称
-                tempList.invitationMethod_dictText = that.zhaobiaoModel[i].biddingType;//邀请方式
-                tempList.inquiryStatus_dictText = that.zhaobiaoModel[i].biddingStatus;//询价状态
+                tempList.invitationMethod_dictText = that.zhaobiaoModel[i].biddingType_dictText;//邀请方式
+                tempList.inquiryStatus_dictText = that.zhaobiaoModel[i].biddingStatus_dictText;//询价状态
                 tempList.createUser = that.zhaobiaoModel[i].createUser;//创建人
                 tempList.createTime = that.zhaobiaoModel[i].createTime;//创建时间
                 tempList.quotationDeadline = that.zhaobiaoModel[i].biddingDeadline;//招标截止时间
-                that.table1Model.push(that.zhaobiaoModel)
+                that.table1Model.push(tempList)
+                this.loading = false
               }
             } else {
               this.$message.warning(res.message)
             }
           }).finally(() => {
-            this.loading = false
+
           })
         } else {
           this.$message.warning(res.message)
@@ -695,8 +693,6 @@ export default {
       }).finally(() => {
         this.loading = false
       })
-
-
     },
 
     handleEdit: function (record, type) {
@@ -725,7 +721,6 @@ export default {
         this.dataSourceChild = this.dataSource[3].children;
 
       }
-
 
     },
 
