@@ -108,25 +108,22 @@
         <span slot="action" slot-scope="text, record">
           <a-divider type="vertical" v-show="record.reqStatus == '0' || record.reqStatus == '3'" />
           <a @click="handleBidding(record)">发布招标</a>
-          <!-- <a-divider type="vertical" v-if="record.reqStatus != '4'"/>
-          <a @click="handleCancel(record)" v-if="record.reqStatus != '4'">取消</a> -->
         </span>
 
       </a-table>
       <!-- 评估设计阶段区域-begin -->
       <a-table v-if="current == '1'" ref="table" style="width: 85%;margin-top: -42px;" :scroll="{ x: 1200, y: 500 }"
-        rowKey="id" :columns="columns1" :dataSource="xunjiaModel" :pagination="false" :loading="loading">
-        <!-- <template slot="projectName" slot-scope="text,record">
-          <div style="width: 160px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" :title="text">
-            {{text}}
-          </div>
-        </template> -->
+        rowKey="id" :columns="columns1" :dataSource="table1Model" :pagination="false" :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: 'checkbox' }">
+
       </a-table>
+
       <!-- 评估设计阶段区域-end -->
-
-
     </div>
-
+    <div style="text-align: right;margin-top:15px;" v-if="current == '1'">
+      <a-button type="primary" style="margin-left:10px;">询价问价</a-button>
+      <a-button type="primary" style="margin-left:10px;">发布招标</a-button>
+    </div>
 
     <bidding-main-modal ref="modalBidding" @ok="modalFormOk" />
   </a-card>
@@ -145,7 +142,8 @@ import Vue from 'vue'
 import Sortable from 'sortablejs'
 import { getAction, postAction } from '@/api/manage'
 import { getTreeDate, queryTreeDate, DelDate } from "@api/api"
-import BiddingMainModal from '@/views/bidding/modules/BiddingMainModal'
+import BiddingMainModal from './modules/BiddingMainModal'
+import { ColumnProps } from 'ant-design-vue/es/table/interface';
 
 
 let columns = [
@@ -236,75 +234,7 @@ let columns = [
   }
 ];
 
-let columns1 = [
-  {
-    title: '序号',
-    dataIndex: '',
-    key: 'rowIndex',
-    width: 60,
-    align: "center",
-    customRender: function (t, r, index) {
-      return parseInt(index) + 1;
-    }
-  },
-  {
-    title: '询比价编码',
-    align: "center",
-    // sorter: true,
-    dataIndex: 'reqCode',
-    width: 120,
-  },
-  {
-    title: '询比价名称',
-    align: "center",
-    // sorter: true,
-    dataIndex: 'reqOrgId_dictText',
-    width: 160,
-  },
 
-  {
-    title: '邀请方式',
-    align: "center",
-    // sorter: true,
-    dataIndex: 'invitationMethod_dictText',
-    width: 120,
-  },
-
-  {
-    title: '询价状态',
-    align: "center",
-    // sorter: true,
-    dataIndex: 'inquiryStatus_dictText',
-    width: 120,
-  },
-  {
-    title: '发布人',
-    align: "center",
-    // sorter: true,
-    dataIndex: 'updateUser',
-    width: 120,
-  },
-  {
-    title: '发布时间',
-    align: "center",
-    // sorter: true,
-    dataIndex: 'createTime',
-    customRender: function (text) {
-      return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text)
-    },
-    width: 120,
-  },
-  {
-    title: '报价截止日期',
-    align: "center",
-    // sorter: true,
-    dataIndex: 'quotationDeadline',
-    customRender: function (text) {
-      return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text)
-    },
-    width: 120,
-  }
-];
 const draggingMap = {};
 columns.forEach(col => {
   draggingMap[col.key] = col.width;
@@ -362,7 +292,6 @@ const ResizeableTitle = (h, props, children) => {
     ])
   );
 };
-
 export default {
   name: 'ProjProgress',
   mixins: [JeecgListMixin, billListMixin, billModalMixin],
@@ -373,6 +302,8 @@ export default {
   },
   data() {
     return {
+      countnum: 0,
+      data: [],
       projectSelect: 0,//项目选择key
       projectSelect1: 0,//项目选择key
       projectListOptions: [],//项目列表
@@ -381,6 +312,25 @@ export default {
       table1Model: [],
       zhaobiaoModel: [],
       xunjiaModel: [],
+      // xunjiaModel: [{
+      //   "inquiryCode":"123",
+      //   "inquiryName":"11"
+
+      // },
+      // {
+      //   "inquiryCode":"123",
+      //   "inquiryName":"11"
+
+      // },
+      // {
+      //   "inquiryCode":"123",
+      //   "inquiryName":"11"
+
+      // }
+
+
+
+      // ],
       current: 0,
       currentChild: 0,
       stepStyle: {
@@ -395,7 +345,6 @@ export default {
       subkeyList: [],
       key: 0,
       columns,
-      columns1,
       description: 'proj_base管理页面',
       url: {
         list: "/srm/projProgress/request_main/list",
@@ -409,29 +358,135 @@ export default {
       replaceFields: {
         children: 'children', title: 'gccategoryId_dictText_name', key: 'categoryId' // 看你的接口返回字段是什么，对应匹配就行了
       },
+
+      columns1: [
+        {
+          title: '序号',
+          dataIndex: '',
+          key: 'rowIndex',
+          width: 60,
+          align: "center",
+          customRender: function (t, r, index) {
+            return parseInt(index) + 1;
+          }
+        },
+        {
+          title: '申请编号',
+          align: "center",
+          // sorter: true,
+          dataIndex: 'inquiryCode',
+          width: 120,
+          customRender(_, row) {
+            return { children: row.inquiryCode, attrs: { rowSpan: row.inquiryCodeRowSpan } }
+
+          },
+        },
+        // {
+        //   title: '编号',
+        //   align: "center",
+        //   // sorter: true,
+        //   dataIndex: 'inquiryCode',
+        //   width: 120,
+        // },
+
+        {
+          title: '询比价名称',
+          align: "center",
+          // sorter: true,
+          dataIndex: 'inquiryName',
+          width: 160,
+        },
+
+        {
+          title: '邀请方式',
+          align: "center",
+          // sorter: true,
+          dataIndex: 'invitationMethod_dictText',
+          width: 120,
+        },
+
+        {
+          title: '询价状态',
+          align: "center",
+          // sorter: true,
+          dataIndex: 'inquiryStatus_dictText',
+          width: 120,
+        },
+        {
+          title: '发布人',
+          align: "center",
+          // sorter: true,
+          dataIndex: 'createUser',
+          width: 120,
+        },
+        {
+          title: '发布时间',
+          align: "center",
+          // sorter: true,
+          dataIndex: 'createTime',
+          customRender: function (text) {
+            return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text)
+          },
+          width: 120,
+        },
+        {
+          title: '报价截止日期',
+          align: "center",
+          // sorter: true,
+          dataIndex: 'quotationDeadline',
+          customRender: function (text) {
+            return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text)
+          },
+          width: 120,
+        }
+      ]
+
+
     }
   },
   created() {
   },
   mounted() {
-
+    this.mergeRowCell(this.table1Model)
   },
   computed: {
 
   },
   methods: {
     onSelect(selectedKeys, e) {
-      if (e.selectedNodes !== undefined){
+      if (e.selectedNodes !== undefined) {
         if (this.current == "0") {
-        var seletKey = e.selectedNodes[0].data.props.id
-        this.loadTableData(seletKey);
-      }
-      if (this.current == "1") {
-        var seletKey = e.selectedNodes[0].data.props.id
-        this.loadTableData1(seletKey);
-      }
+          var seletKey = e.selectedNodes[0].data.props.id
+          this.loadTableData(seletKey);
+        }
+        if (this.current == "1") {
+          var seletKey = e.selectedNodes[0].data.props.id
+          this.loadTableData1(seletKey);
+        }
       }
     },
+
+    rowSpan(key, data) {
+      const arr = data.reduce((result, item) => {
+        if (result.indexOf(item[key]) < 0) {
+          result.push(item[key])
+        }
+        return result
+      }, []).reduce((result, keys) => {
+        const children = data.filter(item => item[key] === keys)
+        result = result.concat(children.map((item, index) => ({
+          ...item, [`${key}RowSpan`]: index === 0 ? children.length : 0
+        })))
+        return result
+      }, [])
+      return arr
+    },// 表格合并
+    mergeRowCell(data) {
+      let tableData = this.rowSpan('inquiryCode', data)
+
+      this.table1Model = tableData
+    },
+
     searchQuery1() {
       this.loadChildData();
       this.loadTableData();
@@ -561,7 +616,7 @@ export default {
         this.loading = false
       })
     },
-    
+
     getQueryParams2() {
       let paramTarget = {}
       if (this.dynamicParam) {
@@ -603,40 +658,44 @@ export default {
     // 加载评估设计阶段数据
     loadTableData1(key) {
       var that = this;
-      var params = this.getQueryParams2();//查询条件
-      if (key) {
-        params.categoryId = key;
-      } else {
-        params.categoryId = "";
-      }
+      var params = this.getQueryParams();//查询条件
+      // if (key) {
+      //   params.categoryId = key;
+      // } else {
+
+      // }
+      params.categoryId = "c5fbc2d4-b1df-40aa-8410-ea5cf3d9cd5f";
       getAction(this.url.xunjiaList, params).then((res) => {
         if (res.success) {
-          this.xunjiaModel = res.result.records || res.result;
-          // if (res.result.total) {
-          //   this.ipagination.total = res.result.total;
-          // } else {
-          //   this.ipagination.total = 0;
-          // }
+          that.xunjiaModel = res.result.records || res.result;
+          that.table1Model = Object.assign([], that.xunjiaModel);
+          getAction(this.url.zhaobiaoList, params).then((res) => {
+            if (res.success) {
+              that.zhaobiaoModel = res.result.records || res.result;
+              for (var i = 0; i < that.zhaobiaoModel.length; i++) {
+                var tempList = [];
+                tempList.inquiryCode = that.zhaobiaoModel[i].biddingNo;//编码
+                tempList.inquiryName = that.zhaobiaoModel[i].biddingName;//编码名称
+                tempList.invitationMethod_dictText = that.zhaobiaoModel[i].biddingType;//邀请方式
+                tempList.inquiryStatus_dictText = that.zhaobiaoModel[i].biddingStatus;//询价状态
+                tempList.createUser = that.zhaobiaoModel[i].createUser;//创建人
+                tempList.createTime = that.zhaobiaoModel[i].createTime;//创建时间
+                tempList.quotationDeadline = that.zhaobiaoModel[i].biddingDeadline;//招标截止时间
+                that.table1Model.push(that.zhaobiaoModel)
+              }
+            } else {
+              this.$message.warning(res.message)
+            }
+          }).finally(() => {
+            this.loading = false
+          })
         } else {
           this.$message.warning(res.message)
         }
       }).finally(() => {
         this.loading = false
       })
-      getAction(this.url.zhaobiaoList, params).then((res) => {
-        if (res.success) {
-          this.zhaobiaoModel = res.result.records || res.result;
-          // if (res.result.total) {
-          //   this.ipagination.total = res.result.total;
-          // } else {
-          //   this.ipagination.total = 0;
-          // }
-        } else {
-          this.$message.warning(res.message)
-        }
-      }).finally(() => {
-        this.loading = false
-      })
+
 
     },
 
