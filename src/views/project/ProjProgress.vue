@@ -91,7 +91,7 @@
 
       <!-- 评估设计阶段区域-begin -->
       <a-table v-if="current == '1'" ref="table" style="width: 85%;margin-top: -42px;" :scroll="{ x: 1200, y: 500 }"
-        rowKey="id" :columns="columns1" :dataSource="table1Model" :pagination="false" :loading="loading"
+        rowKey="id" :columns="columns1" :dataSource="zhaobiaoModel" :pagination="false" :loading="loading"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: 'checkbox' }">
       </a-table>
       <!-- 评估设计阶段区域-end -->
@@ -99,18 +99,18 @@
       <!-- 决策阶段区域-begin -->
       <a-table v-if="current == '2'" ref="table" style="width: 85%;margin-top: -42px;" :scroll="{ x: 1200, y: 500 }"
         rowKey="id" :columns="columns1" :dataSource="table2Model" :pagination="false" :loading="loading"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: 'checkbox' }">
+        :rowSelection="{ selectedRowKeys: selectedRowKeys,  type: 'checkbox' }">
       </a-table>
-       <!-- 决策阶段区域 end -->
+      <!-- 决策阶段区域 end -->
 
-             <!-- 决策阶段区域-begin -->
+      <!-- 采购执行区域-begin -->
       <a-table v-if="current == '3'" ref="table" style="width: 85%;margin-top: -42px;" :scroll="{ x: 1200, y: 500 }"
         rowKey="id" :columns="columns1" :dataSource="table3Model" :pagination="false" :loading="loading"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: 'checkbox' }">
+        :rowSelection="{ selectedRowKeys: selectedRowKeys,  type: 'checkbox' }">
       </a-table>
-       <!-- 决策阶段区域 end -->
+      <!-- 采购执行区域 end -->
     </div>
-   
+
     <div style="text-align: right;margin-top:15px;" v-if="current == '1'">
       <a-button type="primary" style="margin-left:10px;">询价问价</a-button>
       <a-button type="primary" style="margin-left:10px;">发布招标</a-button>
@@ -304,22 +304,6 @@ export default {
       table3Model: [],
       zhaobiaoModel: [],
       xunjiaModel: [],
-      // xunjiaModel: [{
-      //   "inquiryCode":"123",
-      //   "inquiryName":"11"
-
-      // },
-      // {
-      //   "inquiryCode":"123",
-      //   "inquiryName":"11"
-
-      // },
-      // {
-      //   "inquiryCode":"123",
-      //   "inquiryName":"11"
-
-      // }
-      // ],
       current: 0,
       currentChild: 0,
       stepStyle: {
@@ -338,7 +322,6 @@ export default {
       url: {
         list: "/srm/projProgress/request_main/list",
         modelList: "/srm/projBase/list",
-        // fetchLastCategory: "srm/projBase/fetchLastCategory",
         xunjiaList: "/srm/projProgress/list", //询价单列表
         zhaobiaoList: "/srm/projProgress/zb/list", //招标列表
         fetchLastCategory: "/srm/projProgress/fetchCategory",
@@ -375,7 +358,8 @@ export default {
           title: '编号',
           align: "center",
           // sorter: true,
-          dataIndex: 'inquiryCode',
+          // dataIndex: 'inquiryCode',
+          dataIndex: 'biddingNo',
           width: 130,
         },
 
@@ -383,7 +367,8 @@ export default {
           title: '名称',
           align: "center",
           // sorter: true,
-          dataIndex: 'inquiryName',
+          // dataIndex: 'inquiryName',
+          dataIndex: 'biddingName',
           width: 160,
         },
 
@@ -391,7 +376,9 @@ export default {
           title: '邀请方式',
           align: "center",
           // sorter: true,
-          dataIndex: 'invitationMethod_dictText',
+          // dataIndex: 'invitationMethod_dictText',
+          dataIndex: 'biddingType_dictText',
+          
           width: 120,
         },
 
@@ -399,7 +386,8 @@ export default {
           title: '状态',
           align: "center",
           // sorter: true,
-          dataIndex: 'inquiryStatus_dictText',
+          // dataIndex: 'inquiryStatus_dictText',
+          dataIndex: 'biddingStatus_dictText',
           width: 120,
         },
         {
@@ -423,7 +411,9 @@ export default {
           title: '报价截止日期',
           align: "center",
           // sorter: true,
-          dataIndex: 'quotationDeadline',
+          // dataIndex: 'quotationDeadline',
+          dataIndex: 'biddingDeadline',
+          
           customRender: function (text) {
             return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text)
           },
@@ -480,8 +470,19 @@ export default {
 
     searchQuery1() {
       this.loadChildData();
-      this.loadTableData();
-      this.loadTableData1();
+      // 需求阶段
+      if(this.current == "0"){
+        this.loadTableData();
+      }
+      // 评估设计阶段
+      if (this.current == "1") {
+        this.loadTableData1();
+      }
+      // 决策阶段
+      if (this.current == "2") {
+        this.loadTableData2();
+      }
+
     },
 
     customRow(record, index) {
@@ -655,46 +656,78 @@ export default {
       this.loading = true
       var params = this.getQueryParams();//查询条件
 
-      params.categoryId = "c5fbc2d4-b1df-40aa-8410-ea5cf3d9cd5f";
-      getAction(this.url.xunjiaList, params).then((res) => {
-        if (res.success) {
-          that.xunjiaModel = res.result.records || res.result;
-          that.table1Model = Object.assign([], that.xunjiaModel);
-          if (key) {
-            params.categoryId = key;
-          } else {
+      // params.categoryId = "c5fbc2d4-b1df-40aa-8410-ea5cf3d9cd5f";
+      if (key) {
+        params.categoryId = key;
+      } else {
 
-          }
+      }
+      // 获取询价数据
+      // getAction(this.url.xunjiaList, params).then((res) => {
+      //   if (res.success) {
+      //     that.xunjiaModel = res.result.records || res.result;
+      //     that.table1Model = Object.assign([], that.xunjiaModel);
+          // 获取招标数据
           getAction(this.url.zhaobiaoList, params).then((res) => {
             if (res.success) {
               that.zhaobiaoModel = res.result.records || res.result;
-              for (var i = 0; i < that.zhaobiaoModel.length; i++) {
-                var tempList = [];
-                tempList.reqCode = that.zhaobiaoModel[i].reqCode;//编码
-                tempList.inquiryCode = that.zhaobiaoModel[i].biddingNo;//编码
-                tempList.inquiryName = that.zhaobiaoModel[i].biddingName;//编码名称
-                tempList.invitationMethod_dictText = that.zhaobiaoModel[i].biddingType_dictText;//邀请方式
-                tempList.inquiryStatus_dictText = that.zhaobiaoModel[i].biddingStatus_dictText;//询价状态
-                tempList.createUser = that.zhaobiaoModel[i].createUser;//创建人
-                tempList.createTime = that.zhaobiaoModel[i].createTime;//创建时间
-                tempList.quotationDeadline = that.zhaobiaoModel[i].biddingDeadline;//招标截止时间
-                that.table1Model.push(tempList)
-                this.loading = false
-              }
+              // if (that.zhaobiaoModel !== []) {
+              //   for (var i = 0; i < that.zhaobiaoModel.length; i++) {
+              //     // 状态不为3定标以外的数据
+              //     if (that.zhaobiaoModel[i].biddingstatus !== "3") {
+              //       var tempList = [];
+              //       tempList.reqCode = that.zhaobiaoModel[i].reqCode;//编码
+              //       tempList.inquiryCode = that.zhaobiaoModel[i].biddingNo;//编码
+              //       tempList.inquiryName = that.zhaobiaoModel[i].biddingName;//编码名称
+              //       tempList.invitationMethod_dictText = that.zhaobiaoModel[i].biddingType_dictText;//邀请方式
+              //       tempList.inquiryStatus_dictText = that.zhaobiaoModel[i].biddingStatus_dictText;//询价状态
+              //       tempList.createUser = that.zhaobiaoModel[i].createUser;//创建人
+              //       tempList.createTime = that.zhaobiaoModel[i].createTime;//创建时间
+              //       tempList.quotationDeadline = that.zhaobiaoModel[i].biddingDeadline;//招标截止时间
+              //       that.table1Model.push(tempList)
+              //       this.loading = false
+              //     }
+                  
+              //   }
+              // } else {
+              //   that.table1Model = [];
+              // }
+
             } else {
               this.$message.warning(res.message)
             }
           }).finally(() => {
-
+            this.loading = false
           })
+      //   } else {
+      //     this.$message.warning(res.message)
+      //   }
+      // }).finally(() => {
+      //   this.loading = false
+      // })
+    },
+     // 加载决策阶段数据
+    loadTableData2(key) {
+      var that = this;
+      this.loading = true
+      var params = this.getQueryParams();//查询条件
+
+      // 获取决策阶段数据
+      getAction(this.url.zhaobiaoList, params).then((res) => {
+        if (res.success) {
+          that.table2Model = res.result.records || res.result;
+          that.table2Model = that.table2Mode.filter(function(item){
+            return item.biddingstatus == "3"
+          })
+        
         } else {
           this.$message.warning(res.message)
         }
       }).finally(() => {
         this.loading = false
       })
-    },
 
+    },
     handleEdit: function (record, type) {
       this.$refs.modalForm.edit(record, type);
       this.$refs.modalForm.title = "编辑";
@@ -712,7 +745,7 @@ export default {
       } else if (tabKey == '1') {
         this.dataSourceChild = this.dataSource[1].children;
         this.loadTableData1();
-        this.loadTableData1(this.dataSource[1].children[0].id);
+        // this.loadTableData1(this.dataSource[1].children[0].id);
 
       } else if (tabKey == '2') {
         this.dataSourceChild = this.dataSource[2].children;
