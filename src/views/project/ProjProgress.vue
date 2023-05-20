@@ -93,6 +93,28 @@
       <a-table v-if="current == '1'" ref="table" style="width: 85%;margin-top: -42px;" :scroll="{ x: 1200, y: 500 }"
         rowKey="id" :columns="columns1" :dataSource="zhaobiaoModel" :pagination="false" :loading="loading"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: 'checkbox' }">
+
+        <div slot="expandedRowRender" slot-scope="text">
+          <div class="rfq-content rfq-content2" style="width: 50%">
+            <table>
+              <thead>
+              <tr>
+                <th width="100px">序号</th>
+                <th width="220px">产品编号</th>
+                <th width="320px">产品名称</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="(item, index) in zhaobiaoModel[0].suppList">
+                <td style="text-align: center">{{index + 1}}</td>
+                <td style="text-align: center">{{item.code}}</td>               
+                <td style="text-align: center">{{item.name}}</td>               
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </a-table>
       <!-- 评估设计阶段区域-end -->
 
@@ -302,7 +324,9 @@ export default {
       table1Model: [],
       table2Model: [],
       table3Model: [],
-      zhaobiaoModel: [],
+      zhaobiaoModel: [
+
+      ],
       xunjiaModel: [],
       current: 0,
       currentChild: 0,
@@ -388,6 +412,14 @@ export default {
           // sorter: true,
           // dataIndex: 'inquiryStatus_dictText',
           dataIndex: 'biddingStatus_dictText',
+          width: 120,
+        },
+        {
+          title: '供应商反馈',
+          align: "center",
+          // sorter: true,
+          // dataIndex: 'inquiryStatus_dictText',
+          dataIndex: 'zzt',
           width: 120,
         },
         {
@@ -671,6 +703,10 @@ export default {
           getAction(this.url.zhaobiaoList, params).then((res) => {
             if (res.success) {
               that.zhaobiaoModel = res.result.records || res.result;
+              
+                for (var i = 0; i < that.zhaobiaoModel.length; i++) {
+                  that.zhaobiaoModel[i].zzt = '已投标'
+                }
               // if (that.zhaobiaoModel !== []) {
               //   for (var i = 0; i < that.zhaobiaoModel.length; i++) {
               //     // 状态不为3定标以外的数据

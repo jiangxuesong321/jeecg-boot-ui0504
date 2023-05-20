@@ -124,7 +124,8 @@
 <!--					<a @click="handleNeck(record)" v-has="'proj:neck'">Neck产能维护</a>-->
           <a-divider type="vertical" v-has="'proj:mangeSubkeyPerson'"/>
           <a @click="handleSubkey(record)" v-has="'proj:mangeSubkeyPerson'">配置子项产线人员</a>
-
+          <a-divider type="vertical" v-has="'proj:mangeSubkeyPerson'"/>
+          <a @click="handleProgress(record)" v-has="'proj:mangeSubkeyPerson'">进展详情</a>
 				</span>
 
 			</a-table>
@@ -172,10 +173,9 @@
         <a-button @click="handleProductLinerOk" type="primary" style="margin-left:10px">提交</a-button>
       </div>
     </a-drawer>
-
-
 		<proj-base-modal ref="modalForm" @ok="modalFormOk"></proj-base-modal>
     <proj-rate-modal ref="rateForm" @ok="modalFormOk"></proj-rate-modal>
+    <proj-Progress-modal ref="modalProgress" @ok="modalFormOk"></proj-Progress-modal>
 	</a-card>
 </template>
 
@@ -191,6 +191,7 @@ import ListColumnsSetter from '@views/components/ListColumnsSetter'
 import Vue from 'vue'
 import Sortable from 'sortablejs'
 import ProjRateModal from '@views/project/modules/ProjRateModal'
+import ProjProgressModal from '@views/project/modules/ProProgressModal'
 import { getAction, postAction } from '@/api/manage'
 
 let columns = [
@@ -463,7 +464,8 @@ let columns = [
 		components: {
 			ProjBaseModal,
       ListColumnsSetter,
-      ProjRateModal
+      ProjRateModal,
+      ProjProgressModal
 		},
 		data() {
       this.components = {
@@ -729,6 +731,10 @@ let columns = [
         this.$refs.modalForm.edit(record,type);
         this.$refs.modalForm.title = "编辑";
         this.$refs.modalForm.disableSubmit = false;
+      },
+      handleProgress: function (record,type) {
+        this.$refs.modalProgress.add(record);
+  
       },
       handleDetail:function(record){
         this.$refs.modalForm.view(record);
